@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBot.WRF", "TestBot.WRF\TestBot.WRF.csproj", "{CEB16ED2-096F-441C-8F70-C2F06740E697}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBot.WPF", "TestBot.WRF\TestBot.WPF.csproj", "{CEB16ED2-096F-441C-8F70-C2F06740E697}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
