@@ -22,16 +22,44 @@ namespace TestBot.BLL
         {
             Name = name;
             Users = new List<User>();
+            if (name == null)
+            {
+                Name = "Новый пользователь";
+            }
+            else 
+            {
+                Name = name;
+            }
         }
 
         public Group(string name, List<User> users)
         {
-            Name = name;
-            Users = users;
+            if (name == null)
+            {
+                Name = "Новый пользователь";
+            }
+            else
+            {
+                Name= name;
+            }
+
+            if (users == null)
+            {
+                Users = new List<User>();
+            }
+            else
+            {
+                Users = users;   
+            }
         }
 
         public void DeleteUser(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             foreach (User item in Users)
             {
                 if(item.Name == name)
@@ -43,6 +71,10 @@ namespace TestBot.BLL
 
         public void DeleteUser(int id)
         {
+            if(id < 0 || id > Users.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(id));
+            }
             Users.RemoveAt(id);
         }
 
@@ -59,11 +91,19 @@ namespace TestBot.BLL
 
         public void ChangeName(string newName)
         {
+            if (newName == null)
+            {
+                throw new ArgumentNullException(nameof(newName));
+            }
             Name = newName;
         }
 
         public void AddUser(User newUser)
         {
+            if (newUser == null)
+            {
+                throw new ArgumentNullException(nameof(newUser));
+            }
             Users.Add(newUser);
         }
     }

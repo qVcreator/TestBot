@@ -5,7 +5,9 @@ VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBot.WPF", "TestBot.WRF\TestBot.WPF.csproj", "{CEB16ED2-096F-441C-8F70-C2F06740E697}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBot.BLL", "TestBot.BLL\TestBot.BLL.csproj", "{C633CB1B-F1E4-4D10-86AA-E5CDCFF39850}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBot.BLL", "TestBot.BLL\TestBot.BLL.csproj", "{C633CB1B-F1E4-4D10-86AA-E5CDCFF39850}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBot.Tests", "TestBot.Tests\TestBot.Tests.csproj", "{ADD17156-6607-4373-97DF-8A34F72E810D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{C633CB1B-F1E4-4D10-86AA-E5CDCFF39850}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C633CB1B-F1E4-4D10-86AA-E5CDCFF39850}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C633CB1B-F1E4-4D10-86AA-E5CDCFF39850}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADD17156-6607-4373-97DF-8A34F72E810D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADD17156-6607-4373-97DF-8A34F72E810D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADD17156-6607-4373-97DF-8A34F72E810D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADD17156-6607-4373-97DF-8A34F72E810D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
