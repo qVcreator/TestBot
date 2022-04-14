@@ -16,4 +16,11 @@ namespace TestBot.BLL.Mocks
         user6,
         user7
     }
+
+    public enum GroupEnums
+    {
+        group1, 
+        group2,
+        group3,
+    }
 }
