@@ -21,6 +21,13 @@ namespace TestBot.BLL
         public Group(string name)
         {
             Name = name;
+            Users = new List<User>();
+        }
+
+        public Group(string name, List<User> users)
+        {
+            Name = name;
+            Users = users;
         }
 
         public void DeleteUser(string name)
