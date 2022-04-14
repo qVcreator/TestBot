@@ -33,6 +33,15 @@ namespace TestBot.BLL.Mocks
                 case UserEnums.user7:
                     return new User("PieMaker42", 3457092118);
                     break;
+                case UserEnums.user1Change:
+                    return new User("Петя", 3457092118);
+                    break;
+                case UserEnums.user2Change:
+                    return new User("Илья", 3457092118);
+                    break;
+                case UserEnums.user3Change:
+                    return new User("Максим", 3457092118);
+                    break;
                 default: throw new Exception();
             }
         } 
