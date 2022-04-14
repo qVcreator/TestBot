@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace TestBot.BLL.Mocks
 {
-    internal class Enums
+    public enum UserEnums
     {
+        user1,
+        user2,
+        user3,
+        user4,
+        user5,
+        user6,
+        user7
     }
 }
