@@ -23,16 +23,9 @@
             <TabItem Header="Пользователи" Width="184" HorizontalAlignment="Center" Height="24" VerticalAlignment="Bottom">
                 <Grid Background="#FFFACAFF">
                     <Label Content="Группы" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-                    <ComboBox x:Name="ComboBoxShowUsers" Margin="10,46,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154">
+                    <ComboBox x:Name="ComboBoxShowUsers" Margin="10,46,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154" SelectionChanged="ComboBoxShowUsers_SelectionChanged">
                         <ComboBoxItem Content="Все пользователи"/>
                     </ComboBox>
-                    <DataGrid x:Name="DataGridShowUsers" HorizontalAlignment="Center" Height="219" Margin="0,77,0,0" VerticalAlignment="Top" Width="331" d:ItemsSource="{d:SampleData ItemCount=5}" AutoGenerateColumns="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Имя" Width="30"/>
-                            <DataGridTextColumn Header="id" Width="30"/>
-                            <DataGridTextColumn Header="Группа"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
                     <Button x:Name="ButtonSaveChangeUser" Content="Сохранить" HorizontalAlignment="Left" Margin="244,301,0,0" VerticalAlignment="Top" Width="104"/>
                     <Label Content="Контроль групп" HorizontalAlignment="Center" Margin="0,327,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
                     <Label Content="Название:" HorizontalAlignment="Left" Margin="17,367,0,0" VerticalAlignment="Top"/>
@@ -41,6 +34,7 @@
                             " Height="22"/>
                     <ComboBox Height="22" Margin="87,385,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="239"/>
                     <Button Content="-" HorizontalAlignment="Left" Margin="326,385,0,0" VerticalAlignment="Top" Width="22" Height="22"/>
+                    <DataGrid x:Name="DataGridShowUsers" HorizontalAlignment="Center" Height="207" Margin="0,89,0,0" VerticalAlignment="Top" Width="330" d:ItemsSource="{d:SampleData ItemCount=5}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Тесты/Опросы" Height="24" VerticalAlignment="Top" Margin="0,0,-91,0">

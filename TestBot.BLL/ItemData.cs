@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestBot.BLL
 {
-    public class ItemData
+    public class UserData
     {
         public string Name { get; set; }
         public string ChatId { get; set; }
