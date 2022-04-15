@@ -23,6 +23,11 @@ namespace TestBot.BLL
 
         public void ChangeName(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException("Name entered incorrectly");
+            }
+
             Name = name;
         }
 
@@ -34,7 +39,12 @@ namespace TestBot.BLL
 
         public void DeleteGroup(int id, List <Group> Groups)
         {
-            Groups.Remove(Groups[id]);
+            if(id < 0 || Groups.Count == 0 || id > Groups.Count)
+            {
+                throw new ArgumentException("Id entered incorrectly");
+            }
+
+            Groups.RemoveAt(id);
         }
 
 
