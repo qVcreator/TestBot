@@ -23,5 +23,11 @@
             }
             Name = newName;
         }
+
+        public override string ToString()
+        {
+            string str = $"[{Name}, {ChatId}] ";
+            return str;
+        }
     }
 }

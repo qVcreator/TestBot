@@ -16,42 +16,42 @@ namespace TestBot.BLL.Mocks
             users.Add(UserMock.GetMock(UserEnums.user3));
 
             List<User> usersDeleteFirst = new List<User>();
-            users.Add(UserMock.GetMock(UserEnums.user2));
-            users.Add(UserMock.GetMock(UserEnums.user3));
+            usersDeleteFirst.Add(UserMock.GetMock(UserEnums.user2));
+            usersDeleteFirst.Add(UserMock.GetMock(UserEnums.user3));
 
             List<User> usersDeleteLast = new List<User>();
-            users.Add(UserMock.GetMock(UserEnums.user1));
-            users.Add(UserMock.GetMock(UserEnums.user2));
+            usersDeleteLast.Add(UserMock.GetMock(UserEnums.user1));
+            usersDeleteLast.Add(UserMock.GetMock(UserEnums.user2));
 
             List<User> usersDeleteMid = new List<User>();
-            users.Add(UserMock.GetMock(UserEnums.user1));
-            users.Add(UserMock.GetMock(UserEnums.user3));
+            usersDeleteMid.Add(UserMock.GetMock(UserEnums.user1));
+            usersDeleteMid.Add(UserMock.GetMock(UserEnums.user3));
 
             List<User> EmptyUser = new List<User>();
 
             List<User> addOn2 = new List<User>();
-            users.Add(UserMock.GetMock(UserEnums.user1));
-            users.Add(UserMock.GetMock(UserEnums.user2));
+            addOn2.Add(UserMock.GetMock(UserEnums.user1));
+            addOn2.Add(UserMock.GetMock(UserEnums.user2));
 
             List<User> addedOn2 = new List<User>();
-            users.Add(UserMock.GetMock(UserEnums.user1));
-            users.Add(UserMock.GetMock(UserEnums.user2));
-            users.Add(UserMock.GetMock(UserEnums.user3Change));
+            addedOn2.Add(UserMock.GetMock(UserEnums.user1));
+            addedOn2.Add(UserMock.GetMock(UserEnums.user2));
+            addedOn2.Add(UserMock.GetMock(UserEnums.user3Change));
 
 
             List<User> addOn3 = new List<User>();
-            users.Add(UserMock.GetMock(UserEnums.user1));
-            users.Add(UserMock.GetMock(UserEnums.user2));
-            users.Add(UserMock.GetMock(UserEnums.user3));
+            addOn3.Add(UserMock.GetMock(UserEnums.user1));
+            addOn3.Add(UserMock.GetMock(UserEnums.user2));
+            addOn3.Add(UserMock.GetMock(UserEnums.user3));
 
             List<User> addedOn3 = new List<User>();
-            users.Add(UserMock.GetMock(UserEnums.user1));
-            users.Add(UserMock.GetMock(UserEnums.user2));
-            users.Add(UserMock.GetMock(UserEnums.user3));
-            users.Add(UserMock.GetMock(UserEnums.user3Change));
+            addedOn3.Add(UserMock.GetMock(UserEnums.user1));
+            addedOn3.Add(UserMock.GetMock(UserEnums.user2));
+            addedOn3.Add(UserMock.GetMock(UserEnums.user3));
+            addedOn3.Add(UserMock.GetMock(UserEnums.user3Change));
 
             List<User> addedOnEmpty = new List<User>();
-            users.Add(UserMock.GetMock(UserEnums.user3));
+            addedOnEmpty.Add(UserMock.GetMock(UserEnums.user3Change));
 
             List<User> users2 = new List<User>();
             users2.Add(UserMock.GetMock(UserEnums.user4));
@@ -84,6 +84,9 @@ namespace TestBot.BLL.Mocks
                     break;
                 case GroupEnums.change1:
                     return new Group("Джамперы", users);
+                    break;
+                case GroupEnums.change2:
+                    return new Group("Бегуны", EmptyUser);
                     break;
                 case GroupEnums.add1:
                     return new Group("Цыплята", addOn3);

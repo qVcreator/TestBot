@@ -26,7 +26,7 @@ namespace TestBot.BLL
             {
                 Name = "Новый пользователь";
             }
-            else 
+            else
             {
                 Name = name;
             }
@@ -40,7 +40,7 @@ namespace TestBot.BLL
             }
             else
             {
-                Name= name;
+                Name = name;
             }
 
             if (users == null)
@@ -49,7 +49,7 @@ namespace TestBot.BLL
             }
             else
             {
-                Users = users;   
+                Users = users;
             }
         }
 
@@ -57,21 +57,21 @@ namespace TestBot.BLL
         {
             if (name == null)
             {
-                throw new ArgumentNullException(nameof(name));
+                throw new ArgumentNullException("name");
             }
 
-            foreach (User item in Users)
+            for (int i = 0; i < Users.Count; i++)
             {
-                if(item.Name == name)
+                if (Users[i].Name == name)
                 {
-                    Users.Remove(item);
+                    Users.RemoveAt(i);
                 }
             }
         }
 
         public void DeleteUser(int id)
         {
-            if(id < 0 || id > Users.Count)
+            if (id < 0 || id > Users.Count || Users.Count == 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(id));
             }
@@ -80,11 +80,11 @@ namespace TestBot.BLL
 
         public void DeleteUser(long chatId)
         {
-            foreach (User item in Users)
+            for (int i = 0; i < Users.Count; i++)
             {
-                if (item.ChatId == chatId)
+                if (Users[i].ChatId == chatId)
                 {
-                    Users.Remove(item);
+                    Users.RemoveAt(i);
                 }
             }
         }
@@ -106,5 +106,53 @@ namespace TestBot.BLL
             }
             Users.Add(newUser);
         }
-    }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || !(obj is Group))
+            {
+                return false;
+            }
+
+            Group group = (Group)obj;
+
+            if (group.Name != Name)
+            {
+                return false;
+            }
+
+            if (group.Users.Count != Users.Count)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < Users.Count; i++)
+            {
+                if (Users[i].Name != group.Users[i].Name)
+                {
+                    return false;
+                }
+
+                if (Users[i].ChatId != group.Users[i].ChatId)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public override string ToString()
+        {
+            string str = $"[{Name}: ";
+            
+            for (int i = 0; i < Users.Count; i++)
+            {
+                str += $"[{Users[i].Name}; {Users[i].ChatId}]";
+            }
+
+            str += "]";
+
+            return str;
+        }
+    }   
 }

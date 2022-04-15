@@ -12,11 +12,12 @@ namespace TestBot.Tests
         [TestCase(GroupEnums.group1, "СoolGuy2008", GroupEnums.group1DeleteMid)]
         [TestCase(GroupEnums.group1, "PinkyPie", GroupEnums.group1DeleteLast)]
         [TestCase(GroupEnums.EmptyGroup, "PinkyPie", GroupEnums.EmptyGroup)]
-        public void DeleteUserTest_WhenParamIsString(GroupEnums type, string name, Group expected)
+        public void DeleteUserTest_WhenParamIsString(GroupEnums type, string name, GroupEnums expectedtype)
         {
             Group actual = GroupMock.GetMock(type);
+            Group expected = GroupMock.GetMock(expectedtype);
             actual.DeleteUser(name);
-            Assert.AreEqual(expected.Users, actual.Users);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(GroupEnums.group1, null)]       
@@ -30,20 +31,12 @@ namespace TestBot.Tests
         [TestCase(GroupEnums.group1, 0, GroupEnums.group1DeleteFirst)]
         [TestCase(GroupEnums.group1, 1, GroupEnums.group1DeleteMid)]
         [TestCase(GroupEnums.group1, 2, GroupEnums.group1DeleteLast)]
-        [TestCase(GroupEnums.EmptyGroup, 0, GroupEnums.EmptyGroup)]
-        public void DeleteUserTest_WhenParamIsId(GroupEnums type, int id, Group expected)
+        public void DeleteUserTest_WhenParamIsId(GroupEnums type, int id, GroupEnums expectedtype)
         {
             Group actual = GroupMock.GetMock(type);
+            Group expected = GroupMock.GetMock(expectedtype);
             actual.DeleteUser(id);
-            Assert.AreEqual(expected.Users, actual.Users);
-        }
-
-        [TestCase(GroupEnums.group1, null)]
-        [TestCase(GroupEnums.EmptyGroup, null)]
-        public void DeleteUserTest_WhenNameIsNull_ShouldThrowArgumentNullException(GroupEnums type, int id)
-        {
-            Group testGroup = GroupMock.GetMock(type);
-            Assert.Throws<ArgumentNullException>(() => testGroup.DeleteUser(id));
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(GroupEnums.group1, -1)]
@@ -53,22 +46,23 @@ namespace TestBot.Tests
         public void DeleteUserTest_WhenIdIsOutOfRange_ShouldThrowArgumentOutOfRangeException(GroupEnums type, int id)
         {
             Group testGroup = GroupMock.GetMock(type);
-            Assert.Throws<ArgumentNullException>(() => testGroup.DeleteUser(id));
+            Assert.Throws<ArgumentOutOfRangeException>(() => testGroup.DeleteUser(id));
         }
 
         [TestCase(GroupEnums.group1, 123456789, GroupEnums.group1DeleteFirst)]
         [TestCase(GroupEnums.group1, 4563217890, GroupEnums.group1DeleteMid)]
         [TestCase(GroupEnums.group1, 4057869231, GroupEnums.group1DeleteLast)]
         [TestCase(GroupEnums.EmptyGroup, 348953498, GroupEnums.EmptyGroup)]
-        public void DeleteUserTest_WhenParamIsChatId(GroupEnums type, long chatId, Group expected)
+        public void DeleteUserTest_WhenParamIsChatId(GroupEnums type, long chatId, GroupEnums expectedtype)
         {
             Group actual = GroupMock.GetMock(type);
+            Group expected = GroupMock.GetMock(expectedtype);
             actual.DeleteUser(chatId);
-            Assert.AreEqual(expected.Users, actual.Users);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(GroupEnums.group1, "Джамперы", GroupEnums.change1)]
-        [TestCase(GroupEnums.EmptyGroup, "Бегуны", GroupEnums.EmptyGroup)]
+        [TestCase(GroupEnums.EmptyGroup, "Бегуны", GroupEnums.change2)]
         public void ChangeNameTest(GroupEnums type, string newName, GroupEnums expectedtype)
         {
             Group actual = GroupMock.GetMock(type);
@@ -94,7 +88,7 @@ namespace TestBot.Tests
             Group expected = GroupMock.GetMock(expectedtype);
             User testUser = UserMock.GetMock(usertype);
             actual.AddUser(testUser);
-            Assert.AreEqual(expected.Users, actual.Users);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(GroupEnums.group1)]
