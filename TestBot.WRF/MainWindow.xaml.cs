@@ -46,6 +46,57 @@ namespace TestBot.WRF
             var userData = GetUsersInGroup();
             DataGridShowUsers.ItemsSource = userData;
         }
+        private void ButtonSaveChangeUser_Click(object sender, RoutedEventArgs e)
+        {
+            List<UserData> data;
+            var oldGroup = DataGridShowUsers.SelectedCells[2];
+            var newGroup = ComboBoxChangeUserGroup.SelectedItem;
+            User selectedUser = new User(DataGridShowUsers.SelectedCells[0].ToString()!,
+                Convert.ToInt64(DataGridShowUsers.SelectedCells[1].ToString()));
+
+            DataGridShowUsers.SelectedCells[2] = (DataGridCellInfo)(newGroup);
+
+            for(int i = 0; i< Groups.Count; i++)
+            {
+                if(Groups[i].Name == oldGroup.ToString())
+                {
+                    Groups[i].DeleteUser(selectedUser.ChatId);
+                }
+                if (Groups[i].Name == newGroup.ToString())
+                {
+                    Groups[i].AddUser(selectedUser);
+                }
+            }
+
+            data = GetUsersInGroup();
+            DataGridShowUsers.ItemsSource = data;
+
+        }
+        private void DataGridShowUsers_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            List<UserData> data;
+            var oldGroup = DataGridShowUsers.SelectedCells[2];
+            var newGroup = ComboBoxChangeUserGroup.SelectedItem;
+            User selectedUser = new User(DataGridShowUsers.SelectedCells[0].ToString()!,
+                Convert.ToInt64(DataGridShowUsers.SelectedCells[1].ToString()));
+
+            DataGridShowUsers.SelectedCells[2] = (DataGridCellInfo)(newGroup);
+
+            for (int i = 0; i < Groups.Count; i++)
+            {
+                if (Groups[i].Name == oldGroup.ToString())
+                {
+                    Groups[i].DeleteUser(selectedUser.ChatId);
+                }
+                if (Groups[i].Name == newGroup.ToString())
+                {
+                    Groups[i].AddUser(selectedUser);
+                }
+            }
+
+            data = GetUsersInGroup();
+            DataGridShowUsers.ItemsSource = data;
+        }
 
         private List<UserData> LoadUserData()
         {
@@ -53,6 +104,8 @@ namespace TestBot.WRF
             foreach (var group in Groups)
             {
                 ComboBoxShowUsers.Items.Add(group.Name);
+                ComboBoxChangeUserGroup.Items.Add(group.Name);
+                ComboBoxDeleteGroup.Items.Add(group.Name);
                 foreach (var user in group.Users)
                 {
                     if (group.Users.Count != 0)
@@ -116,7 +169,6 @@ namespace TestBot.WRF
             }
             return data;
         }
-
 
     }
 }
