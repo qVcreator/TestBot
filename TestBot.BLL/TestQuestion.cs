@@ -26,6 +26,7 @@ namespace TestBot.BLL
             {
                 throw new Exception("newCorrectAnswer must not be null");
             }
+
             CorrectAnswer = newCorrectAnswer;
         }
     }
