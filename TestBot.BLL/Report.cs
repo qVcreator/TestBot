@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace TestBot.BLL
 {
-    internal class Report
+    public class Report
     {
+        public User User { get; private set; }
+
+        public List<AbstractQuestion> Questions { get; private set; }
+
+        public List<string> UserAnswers { get; private set; }
+
+        public void GetReport()
+        {
+
+        }
     }
 }
