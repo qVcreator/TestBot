@@ -23,6 +23,9 @@ namespace TestBot.WRF
     public partial class MainWindow : Window
     {
         public List<Group> Groups { get; private set; }
+        private UserData _selectedUser;
+        private bool _isRefresh;
+
 
         public MainWindow()
         {
@@ -31,7 +34,6 @@ namespace TestBot.WRF
 
         private void MainWindow1_Initialized(object sender, EventArgs e)
         {
-
             Groups = new List<Group>();
             Groups.Add(GroupMock.GetMock(GroupEnums.group1));
             Groups.Add(GroupMock.GetMock(GroupEnums.group2));
@@ -39,58 +41,68 @@ namespace TestBot.WRF
 
             var userData = LoadUserData();
             DataGridShowUsers.ItemsSource = userData;
+            _isRefresh = false;
         }
         
         private void ComboBoxShowUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var userData = GetUsersInGroup();
-            DataGridShowUsers.ItemsSource = userData;
+            if(Groups != null)
+            {
+                var userData = GetUsersInGroup();
+                DataGridShowUsers.ItemsSource = userData;
+            }
         }
         private void ButtonSaveChangeUser_Click(object sender, RoutedEventArgs e)
         {
             List<UserData> data;
-            var oldGroup = DataGridShowUsers.SelectedCells[2];
-            var newGroup = ComboBoxChangeUserGroup.SelectedItem;
-            User selectedUser = new User(DataGridShowUsers.SelectedCells[0].ToString()!,
-                Convert.ToInt64(DataGridShowUsers.SelectedCells[1].ToString()));
+            string oldGroup = TextBoxSelectedUserGroup.Text;
+            string oldName = TextBoxSelectedUserName.Text;
+            var newGroup = ComboBoxNewUserGroup.SelectedItem;
+            var newName = TextBoxNewUserName.Text;
+            bool isDeleted = false;
+            bool isAdded = false;
+            User user = new User(_selectedUser.Name, Convert.ToInt64(_selectedUser.ChatId));
 
-            DataGridShowUsers.SelectedCells[2] = (DataGridCellInfo)(newGroup);
-
-            for(int i = 0; i< Groups.Count; i++)
+            if (newGroup != null && newGroup.ToString() != oldGroup)
             {
-                if(Groups[i].Name == oldGroup.ToString())
+                for (int i = 0; i < Groups.Count; i++)
                 {
-                    Groups[i].DeleteUser(selectedUser.ChatId);
-                }
-                if (Groups[i].Name == newGroup.ToString())
-                {
-                    Groups[i].AddUser(selectedUser);
+                    if (Groups[i].Name == oldGroup.ToString())
+                    {
+                        Groups[i].DeleteUser(user.ChatId);
+                        isDeleted = true;
+                    }
+                    if (Groups[i].Name == newGroup.ToString())
+                    {
+                        Groups[i].AddUser(user);
+                        isAdded = true;
+                    }
+                    if ((isAdded is true) && (isDeleted is true))
+                    {
+                        break;
+                    }
                 }
             }
 
-            data = GetUsersInGroup();
-            DataGridShowUsers.ItemsSource = data;
-
-        }
-        private void DataGridShowUsers_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            List<UserData> data;
-            var oldGroup = DataGridShowUsers.SelectedCells[2];
-            var newGroup = ComboBoxChangeUserGroup.SelectedItem;
-            User selectedUser = new User(DataGridShowUsers.SelectedCells[0].ToString()!,
-                Convert.ToInt64(DataGridShowUsers.SelectedCells[1].ToString()));
-
-            DataGridShowUsers.SelectedCells[2] = (DataGridCellInfo)(newGroup);
-
-            for (int i = 0; i < Groups.Count; i++)
+            
+            if (newName != "")
             {
-                if (Groups[i].Name == oldGroup.ToString())
+                bool isChanged = false;
+                foreach (var group in Groups)
                 {
-                    Groups[i].DeleteUser(selectedUser.ChatId);
-                }
-                if (Groups[i].Name == newGroup.ToString())
-                {
-                    Groups[i].AddUser(selectedUser);
+                    foreach (var changeableUser in group.Users)
+                    {
+                        if (changeableUser.Name == oldName)
+                        {
+                            changeableUser.ChangeName(newName);
+                            isChanged = true;
+                            break;
+                        }
+                    }
+                    if (isChanged)
+                    {
+                        break;
+                    }
                 }
             }
 
@@ -104,7 +116,7 @@ namespace TestBot.WRF
             foreach (var group in Groups)
             {
                 ComboBoxShowUsers.Items.Add(group.Name);
-                ComboBoxChangeUserGroup.Items.Add(group.Name);
+                ComboBoxNewUserGroup.Items.Add(group.Name);
                 ComboBoxDeleteGroup.Items.Add(group.Name);
                 foreach (var user in group.Users)
                 {
@@ -170,5 +182,14 @@ namespace TestBot.WRF
             return data;
         }
 
+        private void DataGridShowUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DataGridShowUsers.CurrentCell.Item is UserData)
+            {
+                _selectedUser = (UserData)(DataGridShowUsers.CurrentCell.Item);
+                TextBoxSelectedUserName.Text = _selectedUser.Name;
+                TextBoxSelectedUserGroup.Text = _selectedUser.Group;
+            }
+        }
     }
 }
