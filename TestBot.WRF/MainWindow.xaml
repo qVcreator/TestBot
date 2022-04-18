@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestBot.WRF"
         mc:Ignorable="d"
-        Title="TestBOT  by DRL" Height="484" Width="371" ResizeMode="NoResize" Initialized="MainWindow1_Initialized">
+        Title="TestBOT  by DRL" Height="534" Width="371" ResizeMode="NoResize" Initialized="MainWindow1_Initialized">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
@@ -21,20 +21,24 @@
         </TabControl>
         <TabControl Grid.RowSpan="2">
             <TabItem Header="Пользователи" Width="184" HorizontalAlignment="Center" Height="24" VerticalAlignment="Bottom">
-                <Grid Background="#FFFACAFF">
+                <Grid Background="#FFC8C8C8">
                     <Label Content="Группы" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-                    <ComboBox x:Name="ComboBoxShowUsers" Margin="10,46,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154" SelectionChanged="ComboBoxShowUsers_SelectionChanged">
+                    <ComboBox x:Name="ComboBoxShowUsers" Margin="10,46,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154" SelectionChanged="ComboBoxShowUsers_SelectionChanged" SelectedIndex="0">
                         <ComboBoxItem Content="Все пользователи"/>
                     </ComboBox>
-                    <Button x:Name="ButtonSaveChangeUser" Content="Сохранить" HorizontalAlignment="Left" Margin="244,301,0,0" VerticalAlignment="Top" Width="104"/>
-                    <Label Content="Контроль групп" HorizontalAlignment="Center" Margin="0,327,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-                    <Label Content="Название:" HorizontalAlignment="Left" Margin="17,367,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="TextBoxNewGroupName" HorizontalAlignment="Left" Margin="87,358,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="239" Height="22"/>
-                    <Button Content="+" HorizontalAlignment="Left" Margin="326,358,0,0" VerticalAlignment="Top" Width="22
+                    <Button x:Name="ButtonSaveChangeUser" Content="Сохранить" HorizontalAlignment="Left" Margin="244,353,0,0" VerticalAlignment="Top" Width="104" Click="ButtonSaveChangeUser_Click" Height="21"/>
+                    <Label Content="Контроль групп" HorizontalAlignment="Left" Margin="128,376,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                    <Label Content="Название:" HorizontalAlignment="Left" Margin="22,416,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="TextBoxNewGroupName" HorizontalAlignment="Left" Margin="87,407,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="239" Height="22"/>
+                    <Button Content="+" HorizontalAlignment="Left" Margin="326,407,0,0" VerticalAlignment="Top" Width="22
                             " Height="22"/>
-                    <ComboBox Height="22" Margin="87,385,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="239"/>
-                    <Button Content="-" HorizontalAlignment="Left" Margin="326,385,0,0" VerticalAlignment="Top" Width="22" Height="22"/>
-                    <DataGrid x:Name="DataGridShowUsers" HorizontalAlignment="Center" Height="207" Margin="0,89,0,0" VerticalAlignment="Top" Width="330" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+                    <ComboBox x:Name="ComboBoxDeleteGroup" Height="22" Margin="87,434,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="239"/>
+                    <Button Content="-" HorizontalAlignment="Left" Margin="326,434,0,0" VerticalAlignment="Top" Width="22" Height="22"/>
+                    <DataGrid x:Name="DataGridShowUsers" HorizontalAlignment="Center" Height="207" Margin="0,89,0,0" VerticalAlignment="Top" Width="330" d:ItemsSource="{d:SampleData ItemCount=5}" GridLinesVisibility="None" SelectionUnit="FullRow" SelectionMode="Single" SelectionChanged="DataGridShowUsers_SelectionChanged" IsReadOnly="True"/>
+                    <ComboBox x:Name="ComboBoxNewUserGroup" HorizontalAlignment="Left" Height="21" Margin="187,300,0,0" VerticalAlignment="Top" Width="161" ToolTip="Новая группа пользователя "/>
+                    <TextBox x:Name="TextBoxSelectedUserGroup" HorizontalAlignment="Left" Margin="18,300,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164" Height="21" IsEnabled="False"/>
+                    <TextBox x:Name="TextBoxSelectedUserName" HorizontalAlignment="Left" Margin="18,326,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164" Height="22" IsEnabled="False"/>
+                    <TextBox x:Name="TextBoxNewUserName" HorizontalAlignment="Left" Margin="187,326,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="161" Height="22" ToolTip="Новое имя пользователя"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Тесты/Опросы" Height="24" VerticalAlignment="Top" Margin="0,0,-91,0">
