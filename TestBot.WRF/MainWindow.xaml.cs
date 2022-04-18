@@ -106,6 +106,8 @@ namespace TestBot.WRF
                 }
             }
 
+            TextBoxNewUserName.Text = "";
+            ComboBoxNewUserGroup.SelectedIndex = -1;
             data = GetUsersInGroup();
             DataGridShowUsers.ItemsSource = data;
         }
