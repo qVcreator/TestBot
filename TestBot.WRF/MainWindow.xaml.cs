@@ -235,10 +235,13 @@ namespace TestBot.WRF
             ComboBoxOldGroupName.Items.Clear();
             foreach(var group in Groups)
             {
-                ComboBoxShowUsers.Items.RemoveAt(1);
                 ComboBoxNewUserGroup.Items.Add(group.Name);
                 ComboBoxDeleteGroup.Items.Add(group.Name);
                 ComboBoxOldGroupName.Items.Add(group.Name);
+            }
+            for(int i = 0; i < ComboBoxShowUsers.Items.Count+1; i++)
+            {
+                ComboBoxShowUsers.Items.RemoveAt(1);
             }
             foreach(var group in Groups)
             {
@@ -246,7 +249,7 @@ namespace TestBot.WRF
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ButtonAddGroup_Click(object sender, RoutedEventArgs e)
         {
             string name = TextBoxNewGroupName.Text;
             Groups.Add(new Group(name));
@@ -254,6 +257,22 @@ namespace TestBot.WRF
             ComboBoxNewUserGroup.Items.Add(name);
             ComboBoxDeleteGroup.Items.Add(name);
             ComboBoxOldGroupName.Items.Add(name);
+        }
+
+        private void ButtonDeleteGroup_Click(object sender, RoutedEventArgs e)
+        {
+            if (ComboBoxDeleteGroup.SelectedIndex != -1)
+            {
+                for (int i = 0; i < Groups.Count; i++)
+                {
+                    if (Groups[i].Name == ComboBoxDeleteGroup.SelectedValue.ToString()!)
+                    {
+                        Groups.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
+            UpdateComboBoxes();
         }
     }
 }
