@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TestBot.BLL;
+using System.Windows.Input;
 using TestBot.BLL.Mocks;
 
 namespace TestBot.WRF
@@ -120,6 +121,7 @@ namespace TestBot.WRF
                 ComboBoxShowUsers.Items.Add(group.Name);
                 ComboBoxNewUserGroup.Items.Add(group.Name);
                 ComboBoxDeleteGroup.Items.Add(group.Name);
+                ComboBoxOldGroupName.Items.Add(group.Name);
                 foreach (var user in group.Users)
                 {
                     if (group.Users.Count != 0)
@@ -192,6 +194,66 @@ namespace TestBot.WRF
                 TextBoxSelectedUserName.Text = _selectedUser.Name;
                 TextBoxSelectedUserGroup.Text = _selectedUser.Group;
             }
+        }
+
+        private void ButtonChangeGroupName_Click(object sender, RoutedEventArgs e)
+        {
+            string oldName;
+            string newName;
+            bool isSucces = false;
+            if (ComboBoxOldGroupName.SelectedIndex != -1 && TextBoxNewNameGroup.Text != "")
+            {
+                oldName = ComboBoxOldGroupName.SelectedValue.ToString()!;
+                newName = TextBoxNewNameGroup.Text;
+                foreach(var group in Groups)
+                {
+                    if (group.Name == oldName)
+                    {
+                        group.ChangeName(newName);
+                        isSucces = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                popupMisingArguments.IsOpen = true;
+            }
+
+            if (isSucces)
+            {
+                UpdateComboBoxes();
+                var data = GetUsersInGroup();
+                DataGridShowUsers.ItemsSource = data;
+            }
+        }
+
+        private void UpdateComboBoxes()
+        {
+            ComboBoxNewUserGroup.Items.Clear();
+            ComboBoxDeleteGroup.Items.Clear();
+            ComboBoxOldGroupName.Items.Clear();
+            foreach(var group in Groups)
+            {
+                ComboBoxShowUsers.Items.RemoveAt(1);
+                ComboBoxNewUserGroup.Items.Add(group.Name);
+                ComboBoxDeleteGroup.Items.Add(group.Name);
+                ComboBoxOldGroupName.Items.Add(group.Name);
+            }
+            foreach(var group in Groups)
+            {
+                ComboBoxShowUsers.Items.Add(group.Name);
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string name = TextBoxNewGroupName.Text;
+            Groups.Add(new Group(name));
+            ComboBoxShowUsers.Items.Add(name);
+            ComboBoxNewUserGroup.Items.Add(name);
+            ComboBoxDeleteGroup.Items.Add(name);
+            ComboBoxOldGroupName.Items.Add(name);
         }
     }
 }
