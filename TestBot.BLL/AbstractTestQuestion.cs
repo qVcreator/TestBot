@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestBot.BLL
 {
-    abstract public class TestQuestion : Question
+    abstract public class AbstractTestQuestion : АbstractQuestion
     {
         public string CorrectAnswer { get; set; }
 

@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace TestBot.BLL
 {
-    abstract public class Question
+    abstract public class АbstractQuestion
     {
         public string Text { get; set; }
 
         public List<string> Answers { get; set; }
-
-        public int CountOfAnswer = 0;
 
         public void ChangeText(string newText)
         {
@@ -46,7 +44,6 @@ namespace TestBot.BLL
             }
 
             Answers.Add(textNewAnswer);
-            CountOfAnswer++;
         }    
     }
 }
