@@ -25,7 +25,6 @@ namespace TestBot.WRF
     {
         public List<Group> Groups { get; private set; }
         private UserData _selectedUser;
-        private bool _isRefresh;
 
 
         public MainWindow()
@@ -36,13 +35,13 @@ namespace TestBot.WRF
         private void MainWindow1_Initialized(object sender, EventArgs e)
         {
             Groups = new List<Group>();
+            Groups.Add(new Group("Другие"));
             Groups.Add(GroupMock.GetMock(GroupEnums.group1));
             Groups.Add(GroupMock.GetMock(GroupEnums.group2));
             Groups.Add(GroupMock.GetMock(GroupEnums.group3));
 
             var userData = LoadUserData();
             DataGridShowUsers.ItemsSource = userData;
-            _isRefresh = false;
         }
         
         private void ComboBoxShowUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -136,6 +135,7 @@ namespace TestBot.WRF
                     }
                 }
             }
+            ComboBoxDeleteGroup.Items.RemoveAt(0);
             return data;
         }
 
@@ -225,6 +225,7 @@ namespace TestBot.WRF
                 UpdateComboBoxes();
                 var data = GetUsersInGroup();
                 DataGridShowUsers.ItemsSource = data;
+                TextBoxNewNameGroup.Text = "";
             }
         }
 
@@ -239,7 +240,7 @@ namespace TestBot.WRF
                 ComboBoxDeleteGroup.Items.Add(group.Name);
                 ComboBoxOldGroupName.Items.Add(group.Name);
             }
-            for(int i = 0; i < ComboBoxShowUsers.Items.Count+1; i++)
+            for(int i = 0; i < ComboBoxShowUsers.Items.Count+2; i++)
             {
                 ComboBoxShowUsers.Items.RemoveAt(1);
             }
@@ -247,6 +248,7 @@ namespace TestBot.WRF
             {
                 ComboBoxShowUsers.Items.Add(group.Name);
             }
+            ComboBoxDeleteGroup.Items.RemoveAt(0);
         }
 
         private void ButtonAddGroup_Click(object sender, RoutedEventArgs e)
@@ -267,12 +269,19 @@ namespace TestBot.WRF
                 {
                     if (Groups[i].Name == ComboBoxDeleteGroup.SelectedValue.ToString()!)
                     {
+                        var usersToDelete = Groups[i].Users;
+                        for(int j = 0; j < usersToDelete.Count; j++)
+                        {
+                            Groups[0].AddUser(Groups[i].Users[j]);
+                        }
                         Groups.RemoveAt(i);
                         break;
                     }
                 }
+                UpdateComboBoxes();
+                var data = GetUsersInGroup();
+                DataGridShowUsers.ItemsSource = data;
             }
-            UpdateComboBoxes();
         }
     }
 }
