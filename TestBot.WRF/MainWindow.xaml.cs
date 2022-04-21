@@ -61,55 +61,64 @@ namespace TestBot.WRF
             var newName = TextBoxNewUserName.Text;
             bool isDeleted = false;
             bool isAdded = false;
-            User user = new User(_selectedUser.Name, Convert.ToInt64(_selectedUser.ChatId));
 
-            if (newGroup != null && newGroup.ToString() != oldGroup)
+            if ((oldGroup != "" && oldName != "") && !(newName == "" && newGroup == null))
             {
-                for (int i = 0; i < Groups.Count; i++)
+                User user = new User(_selectedUser.Name, Convert.ToInt64(_selectedUser.ChatId));
+                if (newGroup != null && newGroup.ToString() != oldGroup)
                 {
-                    if (Groups[i].Name == oldGroup.ToString())
+                    for (int i = 0; i < Groups.Count; i++)
                     {
-                        Groups[i].DeleteUser(user.ChatId);
-                        isDeleted = true;
-                    }
-                    if (Groups[i].Name == newGroup.ToString())
-                    {
-                        Groups[i].AddUser(user);
-                        isAdded = true;
-                    }
-                    if ((isAdded is true) && (isDeleted is true))
-                    {
-                        break;
-                    }
-                }
-            }
-
-            
-            if (newName != "")
-            {
-                bool isChanged = false;
-                foreach (var group in Groups)
-                {
-                    foreach (var changeableUser in group.Users)
-                    {
-                        if (changeableUser.Name == oldName)
+                        if (Groups[i].Name == oldGroup.ToString())
                         {
-                            changeableUser.ChangeName(newName);
-                            isChanged = true;
+                            Groups[i].DeleteUser(user.ChatId);
+                            isDeleted = true;
+                        }
+                        if (Groups[i].Name == newGroup.ToString())
+                        {
+                            Groups[i].AddUser(user);
+                            isAdded = true;
+                        }
+                        if ((isAdded is true) && (isDeleted is true))
+                        {
+                            TextBoxSelectedUserGroup.Text = newGroup.ToString();
                             break;
                         }
                     }
-                    if (isChanged)
+                }
+
+
+                if (newName != "")
+                {
+                    bool isChanged = false;
+                    foreach (var group in Groups)
                     {
-                        break;
+                        foreach (var changeableUser in group.Users)
+                        {
+                            if (changeableUser.Name == oldName)
+                            {
+                                changeableUser.ChangeName(newName);
+                                TextBoxSelectedUserName.Text = newName;
+                                isChanged = true;
+                                break;
+                            }
+                        }
+                        if (isChanged)
+                        {
+                            break;
+                        }
                     }
                 }
-            }
 
-            TextBoxNewUserName.Text = "";
-            ComboBoxNewUserGroup.SelectedIndex = -1;
-            data = GetUsersInGroup();
-            DataGridShowUsers.ItemsSource = data;
+                TextBoxNewUserName.Text = "";
+                ComboBoxNewUserGroup.SelectedIndex = -1;
+                data = GetUsersInGroup();
+                DataGridShowUsers.ItemsSource = data;
+            }
+            else
+            {
+                popupMisingArgs.IsOpen = true;
+            }
         }
 
         private List<UserData> LoadUserData()
@@ -253,12 +262,20 @@ namespace TestBot.WRF
 
         private void ButtonAddGroup_Click(object sender, RoutedEventArgs e)
         {
+
             string name = TextBoxNewGroupName.Text;
-            Groups.Add(new Group(name));
-            ComboBoxShowUsers.Items.Add(name);
-            ComboBoxNewUserGroup.Items.Add(name);
-            ComboBoxDeleteGroup.Items.Add(name);
-            ComboBoxOldGroupName.Items.Add(name);
+            if (name != "")
+            {
+                Groups.Add(new Group(name));
+                ComboBoxShowUsers.Items.Add(name);
+                ComboBoxNewUserGroup.Items.Add(name);
+                ComboBoxDeleteGroup.Items.Add(name);
+                ComboBoxOldGroupName.Items.Add(name);
+            }
+            else
+            {
+                popupMisingAddNameArgument.IsOpen = true;
+            }
         }
 
         private void ButtonDeleteGroup_Click(object sender, RoutedEventArgs e)
@@ -281,6 +298,10 @@ namespace TestBot.WRF
                 UpdateComboBoxes();
                 var data = GetUsersInGroup();
                 DataGridShowUsers.ItemsSource = data;
+            }
+            else
+            {
+                popupMisingDeletNameArgument.IsOpen = true;
             }
         }
     }

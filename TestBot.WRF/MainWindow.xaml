@@ -27,13 +27,28 @@
                         <ComboBoxItem Content="Все пользователи"/>
                     </ComboBox>
                     <Button x:Name="ButtonSaveChangeUser" Content="Сохранить" HorizontalAlignment="Left" Margin="244,384,0,0" VerticalAlignment="Top" Width="104" Click="ButtonSaveChangeUser_Click" Height="20"/>
+                    <Popup x:Name="popupMisingArgs" StaysOpen="False" Placement="Mouse" MaxWidth="180" AllowsTransparency="True"  >
+                        <TextBlock TextWrapping="Wrap" Width="180" Background="LightPink" Opacity="0.8" >
+                            Заполните поля
+                        </TextBlock>
+                    </Popup>
                     <Label Content="Управление группами" HorizontalAlignment="Center" Margin="0,403,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
                     <Label Content="Название:" HorizontalAlignment="Left" Margin="48,443,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="TextBoxNewGroupName" HorizontalAlignment="Left" Margin="118,434,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="208" Height="22"/>
                     <Button x:Name="ButtonAddGroup" Content="+" HorizontalAlignment="Left" Margin="326,434,0,0" VerticalAlignment="Top" Width="22
                             " Height="22" Click="ButtonAddGroup_Click"/>
+                    <Popup x:Name="popupMisingAddNameArgument" StaysOpen="False" Placement="Mouse" MaxWidth="180" AllowsTransparency="True"  >
+                        <TextBlock TextWrapping="Wrap" Width="180" Background="LightPink" Opacity="0.8" >
+                            Введите название
+                        </TextBlock>
+                    </Popup>
                     <ComboBox x:Name="ComboBoxDeleteGroup" Height="22" Margin="118,461,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="208"/>
                     <Button x:Name="ButtonDeleteGroup" Content="-" HorizontalAlignment="Left" Margin="326,460,0,0" VerticalAlignment="Top" Width="22" Height="22" Click="ButtonDeleteGroup_Click"/>
+                    <Popup x:Name="popupMisingDeletNameArgument" StaysOpen="False" Placement="Mouse" MaxWidth="180" AllowsTransparency="True"  >
+                        <TextBlock TextWrapping="Wrap" Width="180" Background="LightPink" Opacity="0.8" >
+                            Выберите группу из списка
+                        </TextBlock>
+                    </Popup>
                     <DataGrid x:Name="DataGridShowUsers" HorizontalAlignment="Center" Height="207" Margin="0,89,0,0" VerticalAlignment="Top" Width="330" d:ItemsSource="{d:SampleData ItemCount=5}" GridLinesVisibility="None" SelectionUnit="FullRow" SelectionMode="Single" SelectionChanged="DataGridShowUsers_SelectionChanged" IsReadOnly="True"/>
                     <ComboBox x:Name="ComboBoxNewUserGroup" HorizontalAlignment="Left" Height="21" Margin="186,331,0,0" VerticalAlignment="Top" Width="162" ToolTip="Новая группа пользователя "/>
                     <TextBox x:Name="TextBoxSelectedUserGroup" HorizontalAlignment="Left" Margin="18,331,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164" Height="21" IsEnabled="False"/>
