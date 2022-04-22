@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestBot.WRF"
         mc:Ignorable="d"
-        Title="TestBOT  by DRL" Height="534" Width="371" ResizeMode="NoResize" Initialized="MainWindow1_Initialized">
+        Title="TestBOT  by DRL" Height="636" Width="371" ResizeMode="NoResize" Initialized="MainWindow1_Initialized">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
@@ -26,19 +26,45 @@
                     <ComboBox x:Name="ComboBoxShowUsers" Margin="10,46,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154" SelectionChanged="ComboBoxShowUsers_SelectionChanged" SelectedIndex="0">
                         <ComboBoxItem Content="Все пользователи"/>
                     </ComboBox>
-                    <Button x:Name="ButtonSaveChangeUser" Content="Сохранить" HorizontalAlignment="Left" Margin="244,353,0,0" VerticalAlignment="Top" Width="104" Click="ButtonSaveChangeUser_Click" Height="21"/>
-                    <Label Content="Контроль групп" HorizontalAlignment="Left" Margin="128,376,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-                    <Label Content="Название:" HorizontalAlignment="Left" Margin="22,416,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="TextBoxNewGroupName" HorizontalAlignment="Left" Margin="87,407,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="239" Height="22"/>
-                    <Button Content="+" HorizontalAlignment="Left" Margin="326,407,0,0" VerticalAlignment="Top" Width="22
-                            " Height="22"/>
-                    <ComboBox x:Name="ComboBoxDeleteGroup" Height="22" Margin="87,434,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="239"/>
-                    <Button Content="-" HorizontalAlignment="Left" Margin="326,434,0,0" VerticalAlignment="Top" Width="22" Height="22"/>
+                    <Button x:Name="ButtonSaveChangeUser" Content="Сохранить" HorizontalAlignment="Left" Margin="244,384,0,0" VerticalAlignment="Top" Width="104" Click="ButtonSaveChangeUser_Click" Height="20"/>
+                    <Popup x:Name="popupMisingArgs" StaysOpen="False" Placement="Mouse" MaxWidth="180" AllowsTransparency="True"  >
+                        <TextBlock TextWrapping="Wrap" Width="180" Background="LightPink" Opacity="0.8" >
+                            Заполните поля
+                        </TextBlock>
+                    </Popup>
+                    <Label Content="Управление группами" HorizontalAlignment="Center" Margin="0,403,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                    <Label Content="Название:" HorizontalAlignment="Left" Margin="48,443,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="TextBoxNewGroupName" HorizontalAlignment="Left" Margin="118,434,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="208" Height="22"/>
+                    <Button x:Name="ButtonAddGroup" Content="+" HorizontalAlignment="Left" Margin="326,434,0,0" VerticalAlignment="Top" Width="22
+                            " Height="22" Click="ButtonAddGroup_Click"/>
+                    <Popup x:Name="popupMisingAddNameArgument" StaysOpen="False" Placement="Mouse" MaxWidth="180" AllowsTransparency="True"  >
+                        <TextBlock TextWrapping="Wrap" Width="180" Background="LightPink" Opacity="0.8" >
+                            Введите название
+                        </TextBlock>
+                    </Popup>
+                    <ComboBox x:Name="ComboBoxDeleteGroup" Height="22" Margin="118,461,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="208"/>
+                    <Button x:Name="ButtonDeleteGroup" Content="-" HorizontalAlignment="Left" Margin="326,460,0,0" VerticalAlignment="Top" Width="22" Height="22" Click="ButtonDeleteGroup_Click"/>
+                    <Popup x:Name="popupMisingDeletNameArgument" StaysOpen="False" Placement="Mouse" MaxWidth="180" AllowsTransparency="True"  >
+                        <TextBlock TextWrapping="Wrap" Width="180" Background="LightPink" Opacity="0.8" >
+                            Выберите группу из списка
+                        </TextBlock>
+                    </Popup>
                     <DataGrid x:Name="DataGridShowUsers" HorizontalAlignment="Center" Height="207" Margin="0,89,0,0" VerticalAlignment="Top" Width="330" d:ItemsSource="{d:SampleData ItemCount=5}" GridLinesVisibility="None" SelectionUnit="FullRow" SelectionMode="Single" SelectionChanged="DataGridShowUsers_SelectionChanged" IsReadOnly="True"/>
-                    <ComboBox x:Name="ComboBoxNewUserGroup" HorizontalAlignment="Left" Height="21" Margin="187,300,0,0" VerticalAlignment="Top" Width="161" ToolTip="Новая группа пользователя "/>
-                    <TextBox x:Name="TextBoxSelectedUserGroup" HorizontalAlignment="Left" Margin="18,300,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164" Height="21" IsEnabled="False"/>
-                    <TextBox x:Name="TextBoxSelectedUserName" HorizontalAlignment="Left" Margin="18,326,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164" Height="22" IsEnabled="False"/>
-                    <TextBox x:Name="TextBoxNewUserName" HorizontalAlignment="Left" Margin="187,326,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="161" Height="22" ToolTip="Новое имя пользователя"/>
+                    <ComboBox x:Name="ComboBoxNewUserGroup" HorizontalAlignment="Left" Height="21" Margin="186,331,0,0" VerticalAlignment="Top" Width="162" ToolTip="Новая группа пользователя "/>
+                    <TextBox x:Name="TextBoxSelectedUserGroup" HorizontalAlignment="Left" Margin="18,331,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164" Height="21" IsEnabled="False"/>
+                    <TextBox x:Name="TextBoxSelectedUserName" HorizontalAlignment="Left" Margin="18,357,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164" Height="22" IsEnabled="False"/>
+                    <TextBox x:Name="TextBoxNewUserName" HorizontalAlignment="Left" Margin="186,357,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="161" Height="22" ToolTip="Новое имя пользователя"/>
+                    <Label Content="Упраление пользоателями" HorizontalAlignment="Center" Margin="0,301,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                    <Label Content="Новое название:" HorizontalAlignment="Left" Margin="10,516,0,0" VerticalAlignment="Top" Height="28" Width="103"/>
+                    <Label Content="Группа:" HorizontalAlignment="Left" Margin="62,490,0,0" VerticalAlignment="Top" Width="52"/>
+                    <ComboBox x:Name="ComboBoxOldGroupName" HorizontalAlignment="Left" Margin="118,492,0,0" VerticalAlignment="Top" Width="229"/>
+                    <TextBox x:Name="TextBoxNewNameGroup" HorizontalAlignment="Left" Height="22" Margin="118,519,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="229"/>
+                    <Button x:Name="ButtonChangeGroupName" Content="Изменить" HorizontalAlignment="Left" Margin="244,546,0,0" VerticalAlignment="Top" Width="103" Click="ButtonChangeGroupName_Click"/>
+                    <Popup x:Name="popupMisingArguments" StaysOpen="False" Placement="Mouse" MaxWidth="180" AllowsTransparency="True"  >
+                        <TextBlock TextWrapping="Wrap" Width="180" Background="LightPink" Opacity="0.8" >
+                            Заполните поля
+                        </TextBlock>
+                    </Popup>
                 </Grid>
             </TabItem>
             <TabItem Header="Тесты/Опросы" Height="24" VerticalAlignment="Top" Margin="0,0,-91,0">
