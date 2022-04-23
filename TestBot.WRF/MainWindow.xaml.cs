@@ -13,8 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TestBot.BLL;
-using System.Windows.Input;
 using TestBot.BLL.Mocks;
+using System.Windows.Threading;
+using TestBot.BLL.Telegram;
 
 namespace TestBot.WRF
 {
@@ -25,25 +26,44 @@ namespace TestBot.WRF
     {
         public List<Group> Groups { get; private set; }
         private UserData _selectedUser;
-
+        private DispatcherTimer _timer;
+        private const string _token = "5265334359:AAGJciyVQB0wg6YHbnIMmHSNBFMOQxZlrBs";
+        private TelegramManager _telegramManager;
 
         public MainWindow()
         {
+            _telegramManager = new TelegramManager(_token, OnMessage);
             InitializeComponent();
+
+
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += OnTick;
+            _timer.Start();
         }
 
         private void MainWindow1_Initialized(object sender, EventArgs e)
         {
+            _telegramManager.Start();
+
             Groups = new List<Group>();
             Groups.Add(new Group("Другие"));
-            Groups.Add(GroupMock.GetMock(GroupEnums.group1));
-            Groups.Add(GroupMock.GetMock(GroupEnums.group2));
-            Groups.Add(GroupMock.GetMock(GroupEnums.group3));
 
-            var userData = LoadUserData();
-            DataGridShowUsers.ItemsSource = userData;
+            var data = LoadUserData();
+            DataGridShowUsers.ItemsSource = data;
         }
-        
+
+        public void OnMessage(User newUser)
+        {
+            Groups[0].AddUser(newUser);
+        }
+
+        private void OnTick(object sender, EventArgs e)
+        {
+            var data = GetUsersInGroup();
+            DataGridShowUsers.ItemsSource = data;
+        }
+
         private void ComboBoxShowUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if(Groups != null)
@@ -134,13 +154,7 @@ namespace TestBot.WRF
                 {
                     if (group.Users.Count != 0)
                     {
-                        data.Add(new UserData()
-                        {
-                            Name = user.Name,
-                            ChatId = $"{user.ChatId}",
-                            Group = group.Name
-                        });
-
+                        
                     }
                 }
             }
@@ -249,13 +263,16 @@ namespace TestBot.WRF
                 ComboBoxDeleteGroup.Items.Add(group.Name);
                 ComboBoxOldGroupName.Items.Add(group.Name);
             }
-            for(int i = 0; i < ComboBoxShowUsers.Items.Count+2; i++)
+            for(int i = 2; i < ComboBoxShowUsers.Items.Count; i++)
             {
-                ComboBoxShowUsers.Items.RemoveAt(1);
+                ComboBoxShowUsers.Items.RemoveAt(2);
             }
             foreach(var group in Groups)
             {
-                ComboBoxShowUsers.Items.Add(group.Name);
+                if (group.Name != "Другие")
+                {
+                    ComboBoxShowUsers.Items.Add(group.Name);
+                }
             }
             ComboBoxDeleteGroup.Items.RemoveAt(0);
         }
