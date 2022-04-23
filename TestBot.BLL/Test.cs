@@ -6,11 +6,24 @@ using System.Threading.Tasks;
 
 namespace TestBot.BLL
 {
+    public class AbstractQuestion
+    {
+        public string Text { get; set; }
+
+        public List <string> Answers { get; set; }
+
+        public AbstractQuestion(string text, List<string> answers)
+        {
+            Text = text;
+            Answers = answers;
+        }
+    }
+
     public class Test
     {
         public string Name { get; set; }
-
-        //public List<Question> Questions { get; set; }
+        
+        public List <AbstractQuestion> Questions { get; set; }
 
         public DateTime StartTime { get; set; }
 
@@ -27,15 +40,27 @@ namespace TestBot.BLL
             {
                 throw new ArgumentNullException("Name entered incorrectly");
             }
-
             Name = name;
         }
 
-        //public void AddQuestion(string question)
+        public void AddQuestion(AbstractQuestion newQuestion)
+        {
+            if (newQuestion == null)
+            {
+                throw new ArgumentNullException(nameof(newQuestion));
+            }
+            Questions.Add(newQuestion);
+        }
 
-        //public void DeleteQuestion(int id)
+        public void DeleteQuestion(int id)
+        {
+            Questions.RemoveAt(id);
+        }
 
-        //public void ChangeQuestion(int id)
+        public void ChangeQuestion(string text, int id)
+        {
+            Questions[id].Text = text;  
+        }
 
         public void DeleteGroup(int id, List <Group> Groups)
         {
