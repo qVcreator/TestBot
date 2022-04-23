@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestBot.Tests
 {
-    internal class AbstractQuestionTests
+    public class AbstractQuestionTests
     {
     }
 }
