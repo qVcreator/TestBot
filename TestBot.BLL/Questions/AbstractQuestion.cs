@@ -27,9 +27,13 @@ namespace TestBot.BLL.Questions
         {
             questionText = questionText.Trim();
 
-            if(questionText != null || questionText != "")
+            if(string.IsNullOrEmpty(questionText))
             {
-                Description = questionText!;
+                throw new Exception("Invalid argument");
+            }
+            else
+            {
+                Description = questionText;
             }
         }
 
@@ -37,12 +41,30 @@ namespace TestBot.BLL.Questions
         {
             optionText = optionText.Trim();
 
-            if(optionText != null || optionText != "")
+            if(string.IsNullOrEmpty(optionText))
             {
-                Options.Add(optionText!);
+                throw new Exception("Invalid argument");
+            }
+            else if (Options.Contains(optionText))
+            {
+                throw new Exception("Current option already exists in options list");
+            }
+            else
+            {
+                Options.Add(optionText);
             }
         }
 
-        public void DeleteOption() { }
+        public void DeleteOption(string optionText)
+        {
+            if (Options.Contains(optionText))
+            {
+                Options.Remove(optionText);
+            }
+            else
+            {
+                throw new Exception("Current option does not contains in options list");
+            }
+        }
     }
 }
