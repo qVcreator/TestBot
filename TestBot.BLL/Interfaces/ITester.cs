@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace TestBot.BLL.Interfaces
 {
     public interface ITester
     {
-        public void CheckInput();
+        public bool CheckInput(string input);
 
-        public void CheckAnswer();
+        public bool CheckAnswer(string input, List<string> correctAnswers);
     }
 }

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestBot.BLL.Interfaces;
 
 namespace TestBot.BLL.Questions
 {
-    public class OptionQuestion:AbstractQuestion
+    public class OptionQuestion : AbstractQuestion, IPoller
     {
         public OptionQuestion(string description, List<string> options)
         {
@@ -14,18 +15,17 @@ namespace TestBot.BLL.Questions
             {
                 throw new Exception("Invalid description");
             }
-            else if (options.Count < 2 || options.Count > 4)
+            if (options.Count < 2 || options.Count > 4)
             {
                 throw new Exception("Invalid amount of options");
             }
-            else
-            {
-                Description = description!;
 
-                Options = options;
+            Description = description!;
 
-                UserAnswers = new List<string> { };
-            }
+            Options = options;
+
+            UserAnswers = new List<string> { };
+
         }
 
         public OptionQuestion(string description, List<string> options, List<string> correctAnswers)
@@ -34,26 +34,28 @@ namespace TestBot.BLL.Questions
             {
                 throw new Exception("Invalid description");
             }
-            else if (options.Count < 2 || options.Count > 4)
+            if (options.Count < 2 || options.Count > 4)
             {
                 throw new Exception("Invalid amount of options");
             }
-            else if (correctAnswers.Count == 0 || correctAnswers.Count > options.Count)
+            if (correctAnswers.Count == 0 || correctAnswers.Count > options.Count)
             {
                 throw new Exception("Invalid amount of correct answers");
             }
-            else
-            {
-                Description = description!;
+            
+            Description = description!;
 
-                Options = options;
+            Options = options;
 
-                CorrectAnswers = correctAnswers;
+            CorrectAnswers = correctAnswers;
 
-                UserAnswers = new List<string> { };
-            }
+            UserAnswers = new List<string> { };
+            
         }
 
-
+        public bool CheckInput(string input)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

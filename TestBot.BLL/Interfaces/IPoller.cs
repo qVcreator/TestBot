@@ -8,6 +8,6 @@ namespace TestBot.BLL.Interfaces
 {
     public interface IPoller
     {
-        public void CheckInput();
+        public bool CheckInput(string input);
     }
 }

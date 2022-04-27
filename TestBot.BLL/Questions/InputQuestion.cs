@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestBot.BLL.Questions
 {
-    public class InputQuestion:AbstractQuestion
+    public class InputQuestion : AbstractQuestion
     {
         public InputQuestion(string description)
         {
@@ -14,12 +14,11 @@ namespace TestBot.BLL.Questions
             {
                 throw new Exception("Invalid description");
             }
-            else
-            {
-                Description = description;
 
-                UserAnswers = new List<string> { };
-            }
+            Description = description;
+
+            UserAnswers = new List<string> { };
+
         }
 
         public InputQuestion(string description, List<string> correctAnswers)
@@ -28,18 +27,17 @@ namespace TestBot.BLL.Questions
             {
                 throw new Exception("Invalid description");
             }
-            else if (correctAnswers.Count == 1 || correctAnswers.Count > 4)
+            if (correctAnswers.Count == 1 || correctAnswers.Count > 4)
             {
                 throw new Exception("Invalid amount of correct answers");
             }
-            else
-            {
-                Description = description;
 
-                CorrectAnswers = correctAnswers;
+            Description = description;
 
-                UserAnswers = new List<string> { };
-            }
+            CorrectAnswers = correctAnswers;
+
+            UserAnswers = new List<string> { };
+
         }
     }
 }

@@ -19,7 +19,7 @@ namespace TestBot.BLL.Questions
 
         public bool IsTest { get; set; }
 
-        private ITester _test;
+        protected ITester _test;
 
         private IPoller _poll;
 
@@ -31,10 +31,9 @@ namespace TestBot.BLL.Questions
             {
                 throw new Exception("Invalid argument");
             }
-            else
-            {
-                Description = questionText;
-            }
+
+            Description = questionText;
+          
         }
 
         public void AddOption(string optionText)
@@ -45,26 +44,23 @@ namespace TestBot.BLL.Questions
             {
                 throw new Exception("Invalid argument");
             }
-            else if (Options.Contains(optionText))
+            if (Options.Contains(optionText))
             {
                 throw new Exception("Current option already exists in options list");
             }
-            else
-            {
-                Options.Add(optionText);
-            }
+
+            Options.Add(optionText);
+
         }
 
         public void DeleteOption(string optionText)
         {
-            if (Options.Contains(optionText))
-            {
-                Options.Remove(optionText);
-            }
-            else
+            if (!Options.Contains(optionText))
             {
                 throw new Exception("Current option does not contains in options list");
             }
+            
+            Options.Remove(optionText);
         }
     }
 }
