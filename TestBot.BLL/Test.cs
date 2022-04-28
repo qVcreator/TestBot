@@ -12,9 +12,25 @@ namespace TestBot.BLL
         public List<Group> Groups { get; set; }
         public List<AbstractQuestion> Questions { get; set; }
         public DateTime StartTime { get; set; }
-        public double? TestDuration { get; set; }
-        public DateTime FinishTime { get; set; }
+        public double TestDuration { get; set; }
+        public DateTime? FinishTime { get; set; }
 
+        public Test(string name, List<Group> groups, List<AbstractQuestion> questions,
+            DateTime startTime, double testDuration, DateTime? finishTime)
+        {
+            Name = name;
+            Groups = groups;
+            Questions = questions;
+            StartTime = startTime;
+            if(testDuration == 0)
+            {
+                FinishTime = finishTime;
+            }
+            else
+            {
+                FinishTime = StartTime.AddHours(TestDuration);
+            }
+        }
         public void ChangeName(string newName)
         {
             if(newName is null || newName == "")
@@ -51,26 +67,6 @@ namespace TestBot.BLL
             }
         }
 
-        public void ChangeQuestion(AbstractQuestion question, string newDescription)
-        {
-            if (question is null)
-            {
-                throw new ArgumentException("question");
-            }
-            if(newDescription is null || newDescription == "")
-            {
-                throw new ArgumentException("newDescription");
-            }
-
-            for (int i = 0; i < Questions.Count; i++)
-            {
-                if (Questions[i].Description == question.Description)
-                {
-                    Questions[i].Description = newDescription;
-                }
-            }
-        }
-
         public void AddGroup(Group newGroup)
         {
             if (newGroup is null)
@@ -95,6 +91,72 @@ namespace TestBot.BLL
                     Groups.RemoveAt(i);
                 }
             }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || !(obj is Test))
+            {
+                return false;
+            }
+
+            Test test = (Test)obj;
+
+            if (test.Name != Name)
+            {
+                return false;
+            }
+
+            if (test.Groups.Count != Groups.Count)
+            {
+                return false;
+            }
+
+            if(test.Questions.Count != Questions.Count)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < Groups.Count; i++)
+            {
+                if (Groups[i].Name != test.Groups[i].Name)
+                {
+                    return false;
+                }
+            }
+
+            for (int i = 0; i < Questions.Count; i++)
+            {
+                if(Questions[i].Description != test.Questions[i].Description)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public override string ToString()
+        {
+            string str = $"[{Name}: ";
+
+            str += "Группы: {";
+            for (int i = 0; i < Groups.Count; i++)
+            {
+                str += $"{Groups[i].Name}, ";
+            }
+            str += "}\n";
+
+            str += "Вопросы: {";
+            for (int i = 0; i < Questions.Count; i++)
+            {
+                str += $"{Questions[i].Description}, ";
+            }
+            str += "}";
+
+            str += "]";
+
+            return str;
         }
     }
 }
