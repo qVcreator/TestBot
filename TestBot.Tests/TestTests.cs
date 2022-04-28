@@ -8,6 +8,9 @@ namespace TestBot.Tests
     public class TestTests
     {
         [TestCase]
+        public void ChangeName(string newName)
+        {
 
+        }
     }
 }
