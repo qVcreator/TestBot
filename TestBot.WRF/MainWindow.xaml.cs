@@ -72,6 +72,7 @@ namespace TestBot.WRF
                 DataGridShowUsers.ItemsSource = userData;
             }
         }
+
         private void ButtonSaveChangeUser_Click(object sender, RoutedEventArgs e)
         {
             List<UserData> data;
@@ -138,6 +139,108 @@ namespace TestBot.WRF
             else
             {
                 popupMisingArgs.IsOpen = true;
+            }
+        }
+
+        private void DataGridShowUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DataGridShowUsers.CurrentCell.Item is UserData)
+            {
+                _selectedUser = (UserData)(DataGridShowUsers.CurrentCell.Item);
+                TextBoxSelectedUserName.Text = _selectedUser.Name;
+                TextBoxSelectedUserGroup.Text = _selectedUser.Group;
+            }
+        }
+
+        private void ButtonChangeGroupName_Click(object sender, RoutedEventArgs e)
+        {
+            string oldName;
+            string newName;
+            bool isSucces = false;
+            if (ComboBoxOldGroupName.SelectedIndex != -1 && TextBoxNewNameGroup.Text != "")
+            {
+                oldName = ComboBoxOldGroupName.SelectedValue.ToString()!;
+                newName = TextBoxNewNameGroup.Text;
+                foreach(var group in Groups)
+                {
+                    if (group.Name == oldName)
+                    {
+                        group.ChangeName(newName);
+                        isSucces = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                popupMisingArguments.IsOpen = true;
+            }
+
+            if (isSucces)
+            {
+                UpdateComboBoxes();
+                var data = GetUsersInGroup();
+                DataGridShowUsers.ItemsSource = data;
+                TextBoxNewNameGroup.Text = "";
+            }
+        }
+
+        private void ButtonAddGroup_Click(object sender, RoutedEventArgs e)
+        {
+
+            string name = TextBoxNewGroupName.Text;
+            if (name != "")
+            {
+                Groups.Add(new Group(name));
+                ComboBoxShowUsers.Items.Add(name);
+                ComboBoxNewUserGroup.Items.Add(name);
+                ComboBoxDeleteGroup.Items.Add(name);
+                ComboBoxOldGroupName.Items.Add(name);
+            }
+            else
+            {
+                popupMisingAddNameArgument.IsOpen = true;
+            }
+        }
+
+        private void ButtonDeleteGroup_Click(object sender, RoutedEventArgs e)
+        {
+            if (ComboBoxDeleteGroup.SelectedIndex != -1)
+            {
+                for (int i = 0; i < Groups.Count; i++)
+                {
+                    if (Groups[i].Name == ComboBoxDeleteGroup.SelectedValue.ToString()!)
+                    {
+                        var usersToDelete = Groups[i].Users;
+                        for(int j = 0; j < usersToDelete.Count; j++)
+                        {
+                            Groups[0].AddUser(Groups[i].Users[j]);
+                        }
+                        Groups.RemoveAt(i);
+                        break;
+                    }
+                }
+                UpdateComboBoxes();
+                var data = GetUsersInGroup();
+                DataGridShowUsers.ItemsSource = data;
+            }
+            else
+            {
+                popupMisingDeletNameArgument.IsOpen = true;
+            }
+        }
+
+        private void CheckBoxDeadLine_Click(object sender, RoutedEventArgs e)
+        {
+            if(CheckBoxDeadLine.IsChecked is true)
+            {
+                DatePickerDuration.Visibility = Visibility.Visible;
+                TextBoxDuration.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                TextBoxDuration.Visibility = Visibility.Visible;
+                DatePickerDuration.Visibility = Visibility.Hidden;
             }
         }
 
@@ -209,49 +312,6 @@ namespace TestBot.WRF
             return data;
         }
 
-        private void DataGridShowUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (DataGridShowUsers.CurrentCell.Item is UserData)
-            {
-                _selectedUser = (UserData)(DataGridShowUsers.CurrentCell.Item);
-                TextBoxSelectedUserName.Text = _selectedUser.Name;
-                TextBoxSelectedUserGroup.Text = _selectedUser.Group;
-            }
-        }
-
-        private void ButtonChangeGroupName_Click(object sender, RoutedEventArgs e)
-        {
-            string oldName;
-            string newName;
-            bool isSucces = false;
-            if (ComboBoxOldGroupName.SelectedIndex != -1 && TextBoxNewNameGroup.Text != "")
-            {
-                oldName = ComboBoxOldGroupName.SelectedValue.ToString()!;
-                newName = TextBoxNewNameGroup.Text;
-                foreach(var group in Groups)
-                {
-                    if (group.Name == oldName)
-                    {
-                        group.ChangeName(newName);
-                        isSucces = true;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                popupMisingArguments.IsOpen = true;
-            }
-
-            if (isSucces)
-            {
-                UpdateComboBoxes();
-                var data = GetUsersInGroup();
-                DataGridShowUsers.ItemsSource = data;
-                TextBoxNewNameGroup.Text = "";
-            }
-        }
-
         private void UpdateComboBoxes()
         {
             ComboBoxNewUserGroup.Items.Clear();
@@ -277,49 +337,5 @@ namespace TestBot.WRF
             ComboBoxDeleteGroup.Items.RemoveAt(0);
         }
 
-        private void ButtonAddGroup_Click(object sender, RoutedEventArgs e)
-        {
-
-            string name = TextBoxNewGroupName.Text;
-            if (name != "")
-            {
-                Groups.Add(new Group(name));
-                ComboBoxShowUsers.Items.Add(name);
-                ComboBoxNewUserGroup.Items.Add(name);
-                ComboBoxDeleteGroup.Items.Add(name);
-                ComboBoxOldGroupName.Items.Add(name);
-            }
-            else
-            {
-                popupMisingAddNameArgument.IsOpen = true;
-            }
-        }
-
-        private void ButtonDeleteGroup_Click(object sender, RoutedEventArgs e)
-        {
-            if (ComboBoxDeleteGroup.SelectedIndex != -1)
-            {
-                for (int i = 0; i < Groups.Count; i++)
-                {
-                    if (Groups[i].Name == ComboBoxDeleteGroup.SelectedValue.ToString()!)
-                    {
-                        var usersToDelete = Groups[i].Users;
-                        for(int j = 0; j < usersToDelete.Count; j++)
-                        {
-                            Groups[0].AddUser(Groups[i].Users[j]);
-                        }
-                        Groups.RemoveAt(i);
-                        break;
-                    }
-                }
-                UpdateComboBoxes();
-                var data = GetUsersInGroup();
-                DataGridShowUsers.ItemsSource = data;
-            }
-            else
-            {
-                popupMisingDeletNameArgument.IsOpen = true;
-            }
-        }
     }
 }
