@@ -62,6 +62,9 @@ namespace TestBot.BLL.Mocks
         TestChangedName3,
         TestQuestionAdded1,
         TestQuestionAdded2,
-        TestQuestionAdded3
+        TestQuestionAdded3,
+        TestGroupAdded1,
+        TestGroupAdded2,
+        TestGroupAdded3,
     }
 }
