@@ -27,6 +27,9 @@ namespace TestBot.BLL.Mocks
                     return new OptionQuestion("Кто написал Евегений Онегин?",
                         new List<string>() { "Евгений", "Онегин", "А.С. Пушкин", "Бородино" },
                         new List<string>() { "A.C. Пушкин" });
+                default:
+                    throw new Exception();
+                    break;
             }
         }
     }

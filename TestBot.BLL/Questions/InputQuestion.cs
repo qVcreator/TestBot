@@ -27,10 +27,10 @@ namespace TestBot.BLL.Questions
             {
                 throw new Exception("Invalid description");
             }
-            if (correctAnswers.Count == 1 || correctAnswers.Count > 4)
-            {
-                throw new Exception("Invalid amount of correct answers");
-            }
+            //if (correctAnswers.Count == 1 || correctAnswers.Count > 4)
+            //{
+            //    throw new Exception("Invalid amount of correct answers");
+            //}
 
             Description = description;
 

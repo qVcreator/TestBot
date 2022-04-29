@@ -56,6 +56,12 @@ namespace TestBot.BLL.Mocks
     {
         Test1,
         Test2,
-        Test3
+        Test3,
+        TestChangedName1,
+        TestChangedName2,
+        TestChangedName3,
+        TestQuestionAdded1,
+        TestQuestionAdded2,
+        TestQuestionAdded3
     }
 }
