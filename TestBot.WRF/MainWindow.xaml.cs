@@ -44,7 +44,6 @@ namespace TestBot.WRF
 
         private void MainWindow1_Initialized(object sender, EventArgs e)
         {
-            _telegramManager.Start();
 
             Groups = new List<Group>();
             Groups.Add(new Group("Другие"));
@@ -337,5 +336,14 @@ namespace TestBot.WRF
             ComboBoxDeleteGroup.Items.RemoveAt(0);
         }
 
+        private void ButtonStartTest_Click(object sender, RoutedEventArgs e)
+        {
+            _telegramManager.Start();
+        }
+
+        private void ButtonStopTest_Click(object sender, RoutedEventArgs e)
+        {
+            _telegramManager.Stop();
+        }
     }
 }

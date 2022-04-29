@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestBot.WRF"
         mc:Ignorable="d"
-        Title="TestBOT  by DRL" Height="636" Width="371" ResizeMode="NoResize" Initialized="MainWindow1_Initialized">
+        Title="TestBOT  by DRL" Height="542" Width="371" ResizeMode="NoResize" Initialized="MainWindow1_Initialized">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
@@ -20,7 +20,7 @@
             </TabItem>
         </TabControl>
         <TabControl Grid.RowSpan="2">
-            <TabItem Header="Пользователи" Height="24" Margin="1,1,-92,-1" >
+            <TabItem Header="Пользователи" Height="24" Margin="1,1,-14,-1" >
                 <Grid Background="#FFC8C8C8">
                     <Label Content="Группы" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
                     <ComboBox x:Name="ComboBoxShowUsers" Margin="10,46,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154" SelectionChanged="ComboBoxShowUsers_SelectionChanged" SelectedIndex="0">
@@ -67,13 +67,19 @@
                     </Popup>
                 </Grid>
             </TabItem>
-            <TabItem Header="Создание тестов" Height="24" Margin="0,1,-92,-1" HorizontalAlignment="Right" Width="185" >
-                <Grid Background="#FFFACAFF">
+            <TabItem Header="Управление тестами" Height="24" Margin="0,1,-36,-1" HorizontalAlignment="Right" Width="136" >
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFF0F0F0"/>
+                        <GradientStop Color="#FFC8C8C8" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid Background="#FFC8C8C8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="0*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="Создание теста/опроса" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="25" Width="160" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                    <Label Content="Создание" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="25" Width="160" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                     <Label Content="Название:" HorizontalAlignment="Right" Margin="0,71,267,0" VerticalAlignment="Top" Height="26" Width="65"/>
                     <Label Content="Группа(ы):" HorizontalAlignment="Right" Margin="0,102,267,0" VerticalAlignment="Top" Height="26" Width="66"/>
                     <Label Content="Длительность:" HorizontalAlignment="Right" Margin="0,133,267,0" VerticalAlignment="Top" Height="26" Width="88"/>
@@ -84,16 +90,25 @@
                     <Button x:Name="ButtonAddGroupToSend" Content="+" Margin="0,104,10,0" HorizontalAlignment="Right" Width="22" Height="22" VerticalAlignment="Top"/>
                     <TextBox x:Name="TextBoxDuration" HorizontalAlignment="Right" Margin="0,135,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="252" Height="22" Visibility="Visible"/>
                     <DatePicker x:Name="DatePickerDuration" HorizontalAlignment="Left" Margin="103,133,0,0" VerticalAlignment="Top" Width="140" Visibility="Hidden"/>
-                    <Label Content="Вопросы" HorizontalAlignment="Center" Margin="0,294,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
                     <Label Content="Текст вопроса:" HorizontalAlignment="Right" Margin="0,227,500,0" VerticalAlignment="Top" Width="95"/>
-                    <TextBox x:Name="TextBoxQuestionText" HorizontalAlignment="Center" Margin="0,327,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="317" Height="22"/>
                     <RadioButton Content="Тест" HorizontalAlignment="Left" Margin="229,51,0,0" VerticalAlignment="Top" IsChecked="True"/>
                     <RadioButton Content="Опрос" HorizontalAlignment="Left" Margin="295,51,0,0" VerticalAlignment="Top"/>
                     <Button x:Name="QuestionSaveButton" Content="Добавить вопрос" HorizontalAlignment="Left" Margin="158,405,0,289"/>
                     <Label Content="" HorizontalAlignment="Left" Margin="125,185,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Редактирование Теста/Опроса&#xD;&#xA;" HorizontalAlignment="Center" Margin="0,167,0,0" VerticalAlignment="Top" Height="25" Width="228" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                    <Label Content="Тест" HorizontalAlignment="Right" Margin="0,192,272,0" VerticalAlignment="Top" Height="26" Width="35"/>
+                    <Label Content="Редактирование" HorizontalAlignment="Center" Margin="0,167,0,0" VerticalAlignment="Top" Height="25" Width="228" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                    <Label Content="Тест:&#xD;&#xA;" HorizontalAlignment="Right" Margin="0,193,266,0" VerticalAlignment="Top" Height="26" Width="35"/>
                     <Label Content="Группа(ы):" HorizontalAlignment="Right" Margin="0,223,266,0" VerticalAlignment="Top" Height="26" Width="66"/>
+                    <Label Content="Длительность:" HorizontalAlignment="Right" Margin="0,254,267,0" VerticalAlignment="Top" Height="26" Width="88"/>
+                    <ComboBox x:Name="ComboBoxTestNameEdit" HorizontalAlignment="Left" Height="22" Margin="102,197,0,0" VerticalAlignment="Top" Width="253"/>
+                    <ComboBox x:Name="ComboBoxTestGroupsEdit" HorizontalAlignment="Left" Height="22" Margin="102,227,0,0" VerticalAlignment="Top" Width="231"/>
+                    <TextBox x:Name="TextBoxTestDurationEdit" HorizontalAlignment="Left" Margin="102,256,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="253" Height="22"/>
+                    <Button Content="-" HorizontalAlignment="Left" Margin="333,227,0,0" VerticalAlignment="Top" Width="21" Height="22"/>
+                    <Label Content="Вопрсоы:" HorizontalAlignment="Left" Margin="36,285,0,0" VerticalAlignment="Top"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="103,285,0,0" VerticalAlignment="Top" Width="230" Height="22"/>
+                    <Button Content="-" HorizontalAlignment="Left" Margin="333,285,0,0" VerticalAlignment="Top" Width="21" Height="22"/>
+                    <Label Content="Управление" HorizontalAlignment="Center" Margin="0,325,0,0" VerticalAlignment="Top" Height="25" Width="228" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                    <Button x:Name="ButtonStartTest" Content="Запустить!" HorizontalAlignment="Left" Margin="11,364,0,0" VerticalAlignment="Top" Height="22" Width="162" Click="ButtonStartTest_Click"/>
+                    <Button x:Name="ButtonStopTest" Content="Остановить!" HorizontalAlignment="Left" Margin="188,364,0,0" VerticalAlignment="Top" Height="22" Width="162" Click="ButtonStopTest_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>
