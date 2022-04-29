@@ -40,4 +40,31 @@ namespace TestBot.BLL.Mocks
         added2,
         added3
     }
+
+    public enum QuestionEnums
+    {
+        InputQuestion1,
+        InputQuestion2,
+        OptionQuestion3,
+        OptionQuestion4,
+        OrderQuestion5,
+        OrderQuestion6,
+        ChangedQuestion
+    }
+
+    public enum TestEnums
+    {
+        Test1,
+        Test2,
+        Test3,
+        TestChangedName1,
+        TestChangedName2,
+        TestChangedName3,
+        TestQuestionAdded1,
+        TestQuestionAdded2,
+        TestQuestionAdded3,
+        TestGroupAdded1,
+        TestGroupAdded2,
+        TestGroupAdded3,
+    }
 }

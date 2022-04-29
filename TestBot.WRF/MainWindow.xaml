@@ -67,7 +67,7 @@
                     </Popup>
                 </Grid>
             </TabItem>
-            <TabItem Header="Тесты/Опросы" Height="24" VerticalAlignment="Top" Margin="0,0,-91,0">
+            <TabItem Header="Создание тестов" Height="24" VerticalAlignment="Center" HorizontalAlignment="Left" Width="183">
                 <Grid Background="#FFFACAFF">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -75,19 +75,21 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="Создание теста/опроса" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="25" Width="160" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                     <Label Content="Название:" HorizontalAlignment="Right" Margin="0,71,267,0" VerticalAlignment="Top" Height="26" Width="65"/>
-                    <Label Content="группа(ы):" HorizontalAlignment="Right" Margin="0,102,267,0" VerticalAlignment="Top" Height="26" Width="66"/>
+                    <Label Content="Группа(ы):" HorizontalAlignment="Right" Margin="0,102,267,0" VerticalAlignment="Top" Height="26" Width="66"/>
                     <Label Content="Длительность:" HorizontalAlignment="Right" Margin="0,133,267,0" VerticalAlignment="Top" Height="26" Width="88"/>
                     <CheckBox x:Name="CheckBoxDeadLine" Content="ДедЛайн" HorizontalAlignment="Left" Margin="24,51,0,0" VerticalAlignment="Top" Height="15" Width="69"/>
                     <TextBox x:Name="TextBoxTestName" HorizontalAlignment="Right" Margin="0,73,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="252" Height="22
                              " ToolTip=""/>
                     <ComboBox x:Name="ComboBoxChooseGroup" HorizontalAlignment="Right" Margin="0,104,32,0" VerticalAlignment="Top" Width="230" Height="22"/>
                     <Button x:Name="ButtonAddGroupToSend" Content="+" Margin="0,104,10,0" HorizontalAlignment="Right" Width="22" Height="22" VerticalAlignment="Top"/>
-                    <TextBox x:Name="TextBoxDuration" HorizontalAlignment="Right" Margin="0,135,10,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="252" Height="22" Visibility="Visible"/>
+                    <TextBox x:Name="TextBoxDuration" HorizontalAlignment="Right" Margin="0,135,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="252" Height="22" Visibility="Visible"/>
                     <DatePicker x:Name="DatePickerDuration" HorizontalAlignment="Left" Margin="103,133,0,0" VerticalAlignment="Top" Width="140" Visibility="Hidden"/>
                     <Label Content="Вопросы" HorizontalAlignment="Center" Margin="0,177,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-                    <Label Content="Текст:" HorizontalAlignment="Right" Margin="0,227,267,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="TextBoxQuestionText" HorizontalAlignment="Right" Margin="0,227,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="252" Height="22"/>
-                    <CheckBox Content="Опрос" HorizontalAlignment="Left" Margin="187,51,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Текст вопроса:" HorizontalAlignment="Right" Margin="0,227,500,0" VerticalAlignment="Top" Width="95"/>
+                    <TextBox x:Name="TextBoxQuestionText" HorizontalAlignment="Right" Margin="0,231,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" Height="22"/>
+                    <RadioButton Content="Тест" HorizontalAlignment="Left" Margin="229,51,0,0" VerticalAlignment="Top" IsChecked="True"/>
+                    <RadioButton Content="Опрос" HorizontalAlignment="Left" Margin="295,51,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="QuestionSaveButton" Content="Добавить вопрос" HorizontalAlignment="Left" Margin="158,405,0,289"/>
                 </Grid>
             </TabItem>
         </TabControl>
