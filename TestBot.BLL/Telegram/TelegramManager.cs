@@ -13,6 +13,7 @@ namespace TestBot.BLL.Telegram
         private Action<User> _onMessage;
         private List<long> _usersId;
         private bool _isReceive;
+        private Dictionary<User, Test> TestingGroup;
 
         public TelegramManager(string token, Action<User> onMessage)
         {
@@ -46,11 +47,18 @@ namespace TestBot.BLL.Telegram
         {
             _client.StartReceiving(HandleResive, HandleError);
             _isReceive = true;
+            TestController testController = TestController.GetTestController();
+            TestingGroup = testController.GetDictionary();
         }
 
         public void Stop()
         {
             _isReceive = false;
+        }
+
+        public void SendMessage()
+        {
+            _client.SendTextMessageAsync(TestingGroup[])
         }
     }
 }

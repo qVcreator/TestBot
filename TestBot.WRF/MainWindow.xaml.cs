@@ -25,6 +25,11 @@ namespace TestBot.WRF
     public partial class MainWindow : Window
     {
         public List<Group> Groups { get; private set; }
+
+        public List<Group> SendGroup { get; private set; }
+
+        public List<Test> Tests { get; private set; }
+
         private UserData _selectedUser;
         private DispatcherTimer _timer;
         private const string _token = "5265334359:AAGJciyVQB0wg6YHbnIMmHSNBFMOQxZlrBs";
@@ -46,9 +51,13 @@ namespace TestBot.WRF
         {
 
             Groups = new List<Group>();
+            Tests = new List<Test>();
+            SendGroup = new List<Group>();
             Groups.Add(new Group("Другие"));
+            Tests.Add(TestMock.GetMock(TestEnums.TestTelega));
 
             var data = LoadUserData();
+            LoadTests();
             DataGridShowUsers.ItemsSource = data;
         }
 
@@ -243,6 +252,60 @@ namespace TestBot.WRF
             }
         }
 
+        private void ButtonStartTest_Click(object sender, RoutedEventArgs e)
+        {
+            TestController testController = TestController.GetTestController();
+            var chosenTest = ComboBoxTestsToSend.SelectedValue.ToString()!;
+            foreach(var test in Tests)
+            {
+                if(test.Name == chosenTest)
+                {
+                    testController.SetTest(test);
+                    break;
+                }
+            }
+            testController.SetGroup(SendGroup);
+
+            _telegramManager.Start();
+        }
+
+        private void ButtonStopTest_Click(object sender, RoutedEventArgs e)
+        {
+            _telegramManager.Stop();
+        }
+
+        private void ButtonAddGroupToSend_Click(object sender, RoutedEventArgs e)
+        {
+            if (ComboBoxChooseGroup.SelectedValue is null)
+            {
+
+            }
+            else
+            {
+                var selectedGroup = ComboBoxChooseGroup.SelectedValue.ToString()!;
+                for (int i = 0; i < Groups.Count; i++)
+                {
+                    if(selectedGroup == Groups[i].Name)
+                    {
+                        SendGroup.Add(Groups[i]);
+                    }
+                }
+            }
+        }
+        private void ButtonCreateTest_Click(object sender, RoutedEventArgs e)
+        {
+            var testName = TextBoxTestName.Text;
+            if (TextBoxDuration.IsVisible)
+            {
+                double testDuration = Convert.ToDouble(TextBoxDuration.Text);
+                Tests.Add(new Test(testName, SendGroup, testDuration));
+            }
+            else
+            {
+                DateTime finishDate = (DateTime)(DatePickerDuration.SelectedDate);
+                Tests.Add(new Test(testName, SendGroup, finishDate));
+            }
+        }
         private List<UserData> LoadUserData()
         {
             List<UserData> data = new List<UserData>();
@@ -252,6 +315,7 @@ namespace TestBot.WRF
                 ComboBoxNewUserGroup.Items.Add(group.Name);
                 ComboBoxDeleteGroup.Items.Add(group.Name);
                 ComboBoxOldGroupName.Items.Add(group.Name);
+                ComboBoxChooseGroup.Items.Add(group.Name);
                 foreach (var user in group.Users)
                 {
                     if (group.Users.Count != 0)
@@ -311,16 +375,27 @@ namespace TestBot.WRF
             return data;
         }
 
+        private void LoadTests()
+        {
+            ComboBoxTestsToSend.Items.Clear();
+            foreach (var test in Tests)
+            {
+                ComboBoxTestsToSend.Items.Add(test.Name);
+            }
+        }
+
         private void UpdateComboBoxes()
         {
             ComboBoxNewUserGroup.Items.Clear();
             ComboBoxDeleteGroup.Items.Clear();
             ComboBoxOldGroupName.Items.Clear();
-            foreach(var group in Groups)
+            ComboBoxChooseGroup.Items.Clear();
+            foreach (var group in Groups)
             {
                 ComboBoxNewUserGroup.Items.Add(group.Name);
                 ComboBoxDeleteGroup.Items.Add(group.Name);
                 ComboBoxOldGroupName.Items.Add(group.Name);
+                ComboBoxChooseGroup.Items.Add(group.Name);
             }
             for(int i = 2; i < ComboBoxShowUsers.Items.Count; i++)
             {
@@ -336,14 +411,5 @@ namespace TestBot.WRF
             ComboBoxDeleteGroup.Items.RemoveAt(0);
         }
 
-        private void ButtonStartTest_Click(object sender, RoutedEventArgs e)
-        {
-            _telegramManager.Start();
-        }
-
-        private void ButtonStopTest_Click(object sender, RoutedEventArgs e)
-        {
-            _telegramManager.Stop();
-        }
     }
 }
