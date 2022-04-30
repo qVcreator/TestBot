@@ -11,7 +11,7 @@ namespace TestBot.Tests
         [TestCaseSource(typeof(CheckAnswerTestCaseSource))]
         public void CheckAnswerTest(bool expected, string input, List<string> correctAnswers)
         {
-            Tester tester = new Tester();
+            OptionTester tester = new OptionTester();
 
             bool actual = tester.CheckAnswer(input, correctAnswers);
 
@@ -22,7 +22,7 @@ namespace TestBot.Tests
         [TestCase(true, "Иваново")]
         public void CheckInputTest(bool expected, string input)
         {
-            Tester tester = new Tester();
+            OptionTester tester = new OptionTester();
 
             bool actual = tester.CheckInput(input);
 
@@ -33,7 +33,7 @@ namespace TestBot.Tests
         [TestCase("")]
         public void CheckInputTestWhenInvalidInputShouldThrowException(string input)
         {
-            Tester tester = new Tester();
+            OptionTester tester = new OptionTester();
 
             Assert.Throws<Exception>(() => tester.CheckInput(input));
 

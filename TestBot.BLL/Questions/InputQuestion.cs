@@ -3,33 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestBot.BLL.Interfaces;
+using TestBot.BLL.Interfaces.Implementations;
 
 namespace TestBot.BLL.Questions
 {
     public class InputQuestion : AbstractQuestion
     {
-        public InputQuestion(string description)
+        public InputQuestion(string description, ITester tester)
         {
             if(string.IsNullOrEmpty(description))
             {
-                throw new Exception("Invalid description");
+                throw new ArgumentException("Invalid description");
             }
 
             Description = description;
 
             UserAnswers = new List<string> { };
 
+            _test = tester;
         }
 
-        public InputQuestion(string description, List<string> correctAnswers)
+        public InputQuestion(string description, List<string> correctAnswers, ITester tester)
         {
             if(string.IsNullOrEmpty(description))
             {
-                throw new Exception("Invalid description");
+                throw new ArgumentException("Invalid description");
             }
-            if (correctAnswers.Count == 1 || correctAnswers.Count > 4)
+            if (!(correctAnswers.Count == 1))
             {
-                throw new Exception("Invalid amount of correct answers");
+                throw new ArgumentException("Invalid amount of correct answers");
             }
 
             Description = description;
@@ -38,6 +41,7 @@ namespace TestBot.BLL.Questions
 
             UserAnswers = new List<string> { };
 
+            _test = tester;
         }
     }
 }

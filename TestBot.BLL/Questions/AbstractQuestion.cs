@@ -21,8 +21,6 @@ namespace TestBot.BLL.Questions
 
         protected ITester _test;
 
-        private IPoller _poll;
-
         public void ChangeText(string questionText)
         {
             questionText = questionText.Trim();
