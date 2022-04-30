@@ -20,7 +20,12 @@ namespace TestBot.BLL.Interfaces.Implementations
 
         public bool CheckInput(string input)
         {
-            if (!string.IsNullOrEmpty(input))
+            if (input == null)
+            {
+                return false;
+            }
+
+            if (!string.IsNullOrEmpty(input.Trim()))
             {
                 return true;
             }
