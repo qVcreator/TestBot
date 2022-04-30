@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TestBot.BLL.Interfaces.Implementations
+{
+    public class OrderTester : ITester
+    {
+        public bool CheckAnswer(string input, List<string> correctAnswers)
+        {
+            if (correctAnswers.Contains(input.ToLower().Trim()))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool CheckInput(string input)
+        {
+            if (!string.IsNullOrEmpty(input))
+            {
+                return true;
+            }
+
+            return false;
+        }
+    }
+}

@@ -1,18 +1,21 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace TestBot.BLL.Interfaces.Implementations
 {
-    public class Tester : ITester
+    public class InputTester : ITester
     {
         public bool CheckAnswer(string input, List<string> correctAnswers)
         {
-            if (correctAnswers.Contains(input))
+            if (correctAnswers.Contains(input.ToLower().Trim()))
             {
                 return true;
             }
-            else
-            {
-                return false; 
-            }
+
+            return false;
         }
 
         public bool CheckInput(string input)
@@ -21,10 +24,8 @@ namespace TestBot.BLL.Interfaces.Implementations
             {
                 return true;
             }
-            else
-            {
-                throw new Exception("Invalid input");
-            }
+
+            return false;
         }
     }
 }
