@@ -89,7 +89,7 @@
                     <CheckBox x:Name="CheckBoxDeadLine" Content="ДедЛайн" HorizontalAlignment="Left" Margin="24,51,0,0" VerticalAlignment="Top" Height="15" Width="69" Click="CheckBoxDeadLine_Click"/>
                     <TextBox x:Name="TextBoxTestName" HorizontalAlignment="Right" Margin="0,73,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="252" Height="22
                              " ToolTip=""/>
-                    <ComboBox x:Name="ComboBoxChooseGroup" HorizontalAlignment="Right" Margin="0,378,38,0" VerticalAlignment="Top" Width="230" Height="22" SelectionChanged="ComboBoxChooseGroup_SelectionChanged"/>
+                    <ComboBox x:Name="ComboBoxChooseGroup" HorizontalAlignment="Right" Margin="0,378,38,0" VerticalAlignment="Top" Width="230" Height="22"/>
                     <Button x:Name="ButtonAddGroupToSend" Content="+" Margin="0,378,16,0" HorizontalAlignment="Right" Width="22" Height="22" VerticalAlignment="Top" Click="ButtonAddGroupToSend_Click"/>
                     <TextBox x:Name="TextBoxDuration" HorizontalAlignment="Right" Margin="0,119,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="252" Height="22" Visibility="Visible"/>
                     <DatePicker x:Name="DatePickerDuration" HorizontalAlignment="Left" Margin="103,133,0,0" VerticalAlignment="Top" Width="140" Visibility="Hidden"/>

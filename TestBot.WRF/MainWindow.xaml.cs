@@ -428,15 +428,10 @@ namespace TestBot.WRF
                 writer.WriteLineAsync(json);
             }
         }
-
         private void ButtonStartBot_Click(object sender, RoutedEventArgs e)
         {
             _telegramManager.StartBot();
         }
 
-        private void ComboBoxChooseGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }
