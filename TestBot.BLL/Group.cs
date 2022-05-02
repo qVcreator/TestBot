@@ -14,8 +14,7 @@ namespace TestBot.BLL
 
         public Group()
         {
-            Users = new List<User>();
-            Name = "Новая группа";
+            
         }
 
         public Group(string name)

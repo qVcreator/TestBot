@@ -16,6 +16,8 @@ using TestBot.BLL;
 using TestBot.BLL.Mocks;
 using System.Windows.Threading;
 using TestBot.BLL.Telegram;
+using System.Text.Json;
+using System.IO;
 
 namespace TestBot.WRF
 {
@@ -55,6 +57,13 @@ namespace TestBot.WRF
             SendGroup = new List<Group>();
             Groups.Add(new Group("Другие"));
             Tests.Add(TestMock.GetMock(TestEnums.TestTelega));
+
+
+            //using (StreamReader reader = new StreamReader(@"D:\groups.json"))
+            //{
+            //    string groupsJson = reader.ReadToEnd();
+            //    Groups = JsonSerializer.Deserialize<List<Group>>(groupsJson)!;
+            //}
 
             var data = LoadUserData();
             LoadTests();
@@ -256,9 +265,9 @@ namespace TestBot.WRF
         {
             TestController testController = TestController.GetTestController();
             var chosenTest = ComboBoxTestsToSend.SelectedValue.ToString()!;
-            foreach(var test in Tests)
+            foreach (var test in Tests)
             {
-                if(test.Name == chosenTest)
+                if (test.Name == chosenTest)
                 {
                     testController.SetTest(test);
                     break;
@@ -411,5 +420,23 @@ namespace TestBot.WRF
             ComboBoxDeleteGroup.Items.RemoveAt(0);
         }
 
+        private void MainWindow1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string json = JsonSerializer.Serialize(Groups);
+            using (StreamWriter writer = new StreamWriter(@"D:\groups.json", true))
+            {
+                writer.WriteLineAsync(json);
+            }
+        }
+
+        private void ButtonStartBot_Click(object sender, RoutedEventArgs e)
+        {
+            _telegramManager.StartBot();
+        }
+
+        private void ComboBoxChooseGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

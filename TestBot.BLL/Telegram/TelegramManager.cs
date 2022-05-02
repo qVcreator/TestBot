@@ -43,12 +43,18 @@ namespace TestBot.BLL.Telegram
             return Task.CompletedTask;
         }
 
-        public void Start()
+        public void StartBot()
         {
             _client.StartReceiving(HandleResive, HandleError);
             _isReceive = true;
+        }
+
+        public void Start()
+        {
+            _isReceive = true;
             TestController testController = TestController.GetTestController();
             TestingGroup = testController.GetDictionary();
+            SendFirstMessage();
         }
 
         public void Stop()
@@ -56,9 +62,12 @@ namespace TestBot.BLL.Telegram
             _isReceive = false;
         }
 
-        public void SendMessage()
+        public void SendFirstMessage()
         {
-            _client.SendTextMessageAsync(TestingGroup[])
+            foreach(var key in TestingGroup.Keys)
+            {
+                _client.SendTextMessageAsync(key.ChatId, TestingGroup[key].Questions[0].Description);
+            }
         }
     }
 }
