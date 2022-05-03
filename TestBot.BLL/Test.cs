@@ -15,6 +15,8 @@ namespace TestBot.BLL
         public double TestDuration { get; private set; }
         public DateTime? FinishTime { get; private set; }
 
+        public bool isPoll { get; private set; }
+
         public Test()
         {
 

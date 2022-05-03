@@ -38,15 +38,15 @@ namespace TestBot.BLL
             _testController.UsersTest = test;
         }
 
-        public Dictionary<User, Test> GetDictionary()
+        public Dictionary<long , UserTestData> GetDictionary()
         {
-            Dictionary<User, Test> newDictionary = new Dictionary<User, Test>();
+            Dictionary<long, UserTestData> newDictionary = new Dictionary<long, UserTestData>();
             for (int i = 0; i < _testController.TestingGroups.Count; i++)
             {
                 for (int j = 0; j < _testController.TestingGroups[i].Users.Count; j++)
                 {
-                    User user = _testController.TestingGroups[i].Users[j];
-                    newDictionary.Add(user, _testController.UsersTest);
+                    long chatId = _testController.TestingGroups[i].Users[j].ChatId;
+                    newDictionary.Add(chatId, new UserTestData(_testController.UsersTest.Questions));
                 }
             }
             return newDictionary;

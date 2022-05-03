@@ -423,7 +423,7 @@ namespace TestBot.WRF
         private void MainWindow1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             string json = JsonSerializer.Serialize(Groups);
-            using (StreamWriter writer = new StreamWriter(@"D:\groups.json", true))
+            using (StreamWriter writer = new StreamWriter(@"C:\groups.json", true))
             {
                 writer.WriteLineAsync(json);
             }
