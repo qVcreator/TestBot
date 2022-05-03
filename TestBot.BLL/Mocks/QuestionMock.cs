@@ -14,19 +14,19 @@ namespace TestBot.BLL.Mocks
             switch (type)
             {
                 case QuestionEnums.InputQuestion1:
-                    return new InputQuestion("Как тебе наш бот?");
+                    return new InputQuestion("Как тебе наш бот?", new InputTester() );
                     break;
                 case QuestionEnums.InputQuestion2:
-                    return new InputQuestion("2+2*2", new List<string>() { "6" });
+                    return new InputQuestion("2+2*2", new List<string>() { "6" }, new InputTester());
                     break;
                 case QuestionEnums.OptionQuestion3:
                     return new OrderQuestion("Расположите числа в порядке возрастания: 6,4,5,2 ",
-                        new List<string>() { "2", "4", "6", "5" }, new Tester());
+                        new List<string>() { "2", "4", "6", "5" }, new OrderTester());
                     break;
                 case QuestionEnums.OptionQuestion4:
                     return new OptionQuestion("Кто написал Евегений Онегин?",
                         new List<string>() { "Евгений", "Онегин", "А.С. Пушкин", "Бородино" },
-                        new List<string>() { "A.C. Пушкин" });
+                        new List<string>() { "A.C. Пушкин" }, new OrderTester());
                 default:
                     throw new Exception();
                     break;
