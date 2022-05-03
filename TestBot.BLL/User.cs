@@ -4,6 +4,7 @@
     {
         public string Name { get; private set; }
         public long ChatId { get; private set; }
+        public int QueueQuestion { get; private set; } = 0;
 
         public User(string name, long chatId)
         {
@@ -22,6 +23,11 @@
                 throw new ArgumentNullException(nameof(newName));   
             }
             Name = newName;
+        }
+
+        public void UpdateQueue()
+        {
+            QueueQuestion++;
         }
 
         public override string ToString()

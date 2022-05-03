@@ -8,12 +8,17 @@ namespace TestBot.BLL
 {
     public class Test
     {
-        public string Name { get; set; }
-        public List<Group> Groups { get; set; }
-        public List<AbstractQuestion> Questions { get; set; }
-        public DateTime StartTime { get; set; }
-        public double TestDuration { get; set; }
-        public DateTime? FinishTime { get; set; }
+        public string Name { get; private set; }
+        public List<Group> Groups { get; private set; }
+        public List<AbstractQuestion> Questions { get; private set; }
+        public DateTime StartTime { get; private set; }
+        public double TestDuration { get; private set; }
+        public DateTime? FinishTime { get; private set; }
+
+        public Test()
+        {
+
+        }
 
         public Test(string name, List<Group> groups, List<AbstractQuestion> questions,
             DateTime startTime, double testDuration, DateTime? finishTime)
@@ -31,6 +36,24 @@ namespace TestBot.BLL
                 FinishTime = StartTime.AddHours(TestDuration);
             }
         }
+
+        public Test(string name, List<Group> groups, double testDuration)
+        {
+            Name = name;
+            Groups = groups;
+            TestDuration = testDuration;
+            StartTime = DateTime.Now;
+            FinishTime = StartTime.AddHours(TestDuration);
+        }
+
+        public Test(string name, List<Group> groups, DateTime finishTime)
+        {
+            Name = name;
+            Groups = groups;
+            StartTime = DateTime.Now;
+            FinishTime = finishTime;
+        }
+
         public void ChangeName(string newName)
         {
             if(newName is null || newName == "")

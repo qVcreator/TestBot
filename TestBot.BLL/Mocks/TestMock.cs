@@ -88,6 +88,13 @@ namespace TestBot.BLL.Mocks
                         new List<AbstractQuestion>() { QuestionMock.GetMock(QuestionEnums.OptionQuestion3) },
                         DateTime.Now, 2.0, null);
                     break;
+                case TestEnums.TestTelega:
+                    return new Test("Test111",
+                        new List<Group> { GroupMock.GetMock(GroupEnums.group1) },
+                        new List<AbstractQuestion>() { QuestionMock.GetMock(QuestionEnums.InputQuestion1),
+                        QuestionMock.GetMock(QuestionEnums.OptionQuestion3),
+                        QuestionMock.GetMock(QuestionEnums.InputQuestion2)},
+                        DateTime.Now, 2.0, null);
                 default:
                     throw new Exception();
                     break;

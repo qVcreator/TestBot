@@ -18,29 +18,27 @@ namespace TestBot.Tests.TestCaseSources
             List<string> correctAnswersSecond = new List<string>() {};
 
             bool expectedFirst = true;
-            string inputFirst = "булгур";
+            string inputFirst = "Булгур                       ";
 
-            bool expectedSecond = false;
-            string inputSecond = "хречка";
+            bool expectedSecond = true;
+            string inputSecond = " гречка";
 
             bool expectedThird = false;
-            string inputThird = null;
+            string inputThird = "хречка";
 
             bool expectedFourth = false;
-            string inputFourth = "";
+            string inputFourth = "гречка  228";
 
             bool expectedFifth = false;
-            string inputFifth = null;
+            string inputFifth = "";
 
-            bool expectedSixth = false;
-            string inputSixth = "";
+
 
             yield return new object[] { expectedFirst, inputFirst, correctAnswersFirst };
             yield return new object[] { expectedSecond, inputSecond, correctAnswersFirst };
             yield return new object[] { expectedThird, inputThird, correctAnswersFirst };
             yield return new object[] { expectedFourth, inputFourth, correctAnswersFirst };
             yield return new object[] { expectedFifth, inputFifth, correctAnswersSecond };
-            yield return new object[] { expectedSixth, inputSixth, correctAnswersSecond };
         }
     }
 }

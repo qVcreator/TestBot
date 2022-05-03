@@ -7,17 +7,17 @@ using TestBot.BLL.Interfaces;
 
 namespace TestBot.BLL.Questions
 {
-    public class OptionQuestion : AbstractQuestion, IPoller
+    public class OptionQuestion : AbstractQuestion
     {
-        public OptionQuestion(string description, List<string> options)
+        public OptionQuestion(string description, List<string> options, ITester tester)
         {
             if (string.IsNullOrEmpty(description))
             {
-                throw new Exception("Invalid description");
+                throw new ArgumentException("Invalid description");
             }
             if (options.Count < 2 || options.Count > 4)
             {
-                throw new Exception("Invalid amount of options");
+                throw new ArgumentException("Invalid amount of options");
             }
 
             Description = description!;
@@ -26,21 +26,22 @@ namespace TestBot.BLL.Questions
 
             UserAnswers = new List<string> { };
 
+            _test = tester;
         }
 
-        public OptionQuestion(string description, List<string> options, List<string> correctAnswers)
+        public OptionQuestion(string description, List<string> options, List<string> correctAnswers, ITester tester)
         {
             if (string.IsNullOrEmpty(description))
             {
-                throw new Exception("Invalid description");
+                throw new ArgumentException("Invalid description");
             }
-            if (options.Count < 2 || options.Count > 4)
+            if (options.Count < 2 || options.Count > 10)
             {
-                throw new Exception("Invalid amount of options");
+                throw new ArgumentException("Invalid amount of options");
             }
             if (correctAnswers.Count == 0 || correctAnswers.Count > options.Count)
             {
-                throw new Exception("Invalid amount of correct answers");
+                throw new ArgumentException("Invalid amount of correct answers");
             }
             
             Description = description!;
@@ -50,12 +51,9 @@ namespace TestBot.BLL.Questions
             CorrectAnswers = correctAnswers;
 
             UserAnswers = new List<string> { };
-            
+
+            _test = tester; 
         }
 
-        public bool CheckInput(string input)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
