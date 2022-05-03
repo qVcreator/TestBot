@@ -13,11 +13,11 @@ namespace TestBot.BLL.Questions
         {
             if (string.IsNullOrEmpty(description))
             {
-                throw new Exception("Invalid description");
+                throw new ArgumentException("Invalid description");
             }
             if (options.Count < 2 || options.Count > 4)
             {
-                throw new Exception("Invalid amount of options");
+                throw new ArgumentException("Invalid amount of options");
             }
 
             Description = description;
@@ -29,7 +29,7 @@ namespace TestBot.BLL.Questions
             _test = tester;
         }
 
-        public OrderQuestion(string description, List<string> options, List<string> correctAnswers)
+        public OrderQuestion(string description, List<string> options, List<string> correctAnswers, ITester tester)
         {
             if (string.IsNullOrEmpty(description))
             {
@@ -52,6 +52,7 @@ namespace TestBot.BLL.Questions
 
             UserAnswers = new List<string> { };
 
+            _test = tester;
         }
     }
 }
