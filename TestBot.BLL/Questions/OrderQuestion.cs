@@ -9,7 +9,7 @@ namespace TestBot.BLL.Questions
 {
     public class OrderQuestion : AbstractQuestion
     {
-        public OrderQuestion(string description, List<string> options, ITester tester)
+        public OrderQuestion(string description, List<string> options, ITester tester, IKeyboardMaker keyboard)
         {
             if (string.IsNullOrEmpty(description))
             {
@@ -27,9 +27,11 @@ namespace TestBot.BLL.Questions
             UserAnswers = new List<string> { };
 
             _test = tester;
+
+            _keyboardMaker = keyboard;
         }
 
-        public OrderQuestion(string description, List<string> options, List<string> correctAnswers, ITester tester)
+        public OrderQuestion(string description, List<string> options, List<string> correctAnswers, ITester tester, IKeyboardMaker keyboard)
         {
             if (string.IsNullOrEmpty(description))
             {
@@ -53,6 +55,8 @@ namespace TestBot.BLL.Questions
             UserAnswers = new List<string> { };
 
             _test = tester;
+
+            _keyboardMaker = keyboard;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace TestBot.BLL.Questions
 {
     public class InputQuestion : AbstractQuestion
     {
-        public InputQuestion(string description, ITester tester)
+        public InputQuestion(string description, ITester tester, IKeyboardMaker keyboard)
         {
             if(string.IsNullOrEmpty(description))
             {
@@ -22,9 +22,15 @@ namespace TestBot.BLL.Questions
             UserAnswers = new List<string> { };
 
             _test = tester;
+
+            _keyboardMaker = keyboard;
+
+            Options = new List<string>();
+
+
         }
 
-        public InputQuestion(string description, List<string> correctAnswers, ITester tester)
+        public InputQuestion(string description, List<string> correctAnswers, ITester tester, IKeyboardMaker keyboard)
         {
             if(string.IsNullOrEmpty(description))
             {
@@ -42,6 +48,11 @@ namespace TestBot.BLL.Questions
             UserAnswers = new List<string> { };
 
             _test = tester;
+
+            _keyboardMaker = keyboard;
+
+            Options = new List<string>();
+
         }
     }
 }

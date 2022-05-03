@@ -19,7 +19,9 @@ namespace TestBot.BLL.Questions
 
         public bool IsTest { get; set; }
 
-        protected ITester _test;
+        public ITester _test;
+
+        public IKeyboardMaker _keyboardMaker;
 
         public void ChangeText(string questionText)
         {
