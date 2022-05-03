@@ -26,8 +26,6 @@ namespace TestBot.BLL.Questions
             _keyboardMaker = keyboard;
 
             Options = new List<string>();
-
-
         }
 
         public InputQuestion(string description, List<string> correctAnswers, ITester tester, IKeyboardMaker keyboard)
@@ -52,7 +50,6 @@ namespace TestBot.BLL.Questions
             _keyboardMaker = keyboard;
 
             Options = new List<string>();
-
         }
     }
 }

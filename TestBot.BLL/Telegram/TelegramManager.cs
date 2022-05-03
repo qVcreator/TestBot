@@ -35,7 +35,7 @@ namespace TestBot.BLL.Telegram
                     User newUser = new User(botUpdates.Chat.FirstName!, botUpdates.Chat.Id);
                     _onMessage(newUser);
                 }
-                else if (botUpdates != null && botUpdates.Text != "/start")
+                else if (botUpdates != null && botUpdates.Text != "/start" && TestingGroup != null)
                 {
                     if (botUpdates.Text != null && TestingGroup[botUpdates.Chat.Id].Questions[TestingGroup[botUpdates.Chat.Id].QuestionNumber] is InputQuestion)
                     {
@@ -49,17 +49,33 @@ namespace TestBot.BLL.Telegram
 
                         await botClient.SendTextMessageAsync(botUpdates.Chat.Id, currentQuestion.Description,
                             replyMarkup: currentQuestion._keyboardMaker.GetKeyboard(currentQuestion.Options));
-
                     }
+                }
+                else if (update.CallbackQuery != null && TestingGroup != null)
+                {
+                    if (update.CallbackQuery != null && TestingGroup[update.CallbackQuery.Message.Chat.Id].Questions[TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber] is OrderQuestion)
+                    {
+                        var currentQuestion = TestingGroup[update.CallbackQuery.Message.Chat.Id].Questions[TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber];
 
-                    
+                        if (update.CallbackQuery != null && update.CallbackQuery.Data != "Подтвердить" && currentQuestion._test.CheckInput(update.CallbackQuery.Data))
+                        {
+                            currentQuestion.UserAnswers.Add(update.CallbackQuery.Data);
+                        }
+                        else if (update.CallbackQuery != null && update.CallbackQuery.Data == "Подтвердить")
+                        {
+                            TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumberIncrement();
+                            currentQuestion = TestingGroup[update.CallbackQuery.Message.Chat.Id].Questions[TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber];
+
+                            await botClient.SendTextMessageAsync(update.CallbackQuery.Message.Chat.Id, currentQuestion.Description,
+                                replyMarkup: currentQuestion._keyboardMaker.GetKeyboard(currentQuestion.Options));
+                        }
+                    }
                 }
             }
         }
 
         private Task HandleError(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
-
             return Task.CompletedTask;
         }
 
