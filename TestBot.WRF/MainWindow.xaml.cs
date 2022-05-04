@@ -18,6 +18,7 @@ using System.Windows.Threading;
 using TestBot.BLL.Telegram;
 using System.Text.Json;
 using System.IO;
+using TestBot.BLL.GroupModels;
 
 namespace TestBot.WRF
 {
@@ -59,11 +60,21 @@ namespace TestBot.WRF
             Tests.Add(TestMock.GetMock(TestEnums.TestTelega));
 
 
-            //using (StreamReader reader = new StreamReader(@"D:\groups.json"))
-            //{
-            //    string groupsJson = reader.ReadToEnd();
-            //    Groups = JsonSerializer.Deserialize<List<Group>>(groupsJson)!;
-            //}
+            using (StreamReader reader = new StreamReader(@"D:\groups.json"))
+            {
+                string groupsJson = reader.ReadToEnd();
+                List<GroupModel> groupModels = JsonSerializer.Deserialize<List<GroupModel>>(groupsJson)!;
+                List<long> ids = new List<long>();
+                foreach(var groupModel in groupModels)
+                {
+                    Groups.Add(new Group(groupModel.Name, groupModel.Users));
+                    for (int i = 0; i < groupModel.Users.Count; i++)
+                    {
+                        ids.Add(groupModel.Users[i].ChatId);
+                    }
+                }
+                _telegramManager.UpdateIds(ids);
+            }
 
             var data = LoadUserData();
             LoadTests();

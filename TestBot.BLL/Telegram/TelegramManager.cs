@@ -105,5 +105,10 @@ namespace TestBot.BLL.Telegram
                 _client.SendTextMessageAsync(key, TestingGroup[key].Questions[0].Description) ;
             }
         }
+
+        public void UpdateIds(List<long> usersId)
+        {
+            _usersId = usersId;
+        }
     }
 }
