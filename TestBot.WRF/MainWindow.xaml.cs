@@ -339,7 +339,7 @@ namespace TestBot.WRF
                     {
                         string[] tmp = test.Questions[i].GetType().ToString().Split(".");
 
-                        questionData.Add(new QuestionData(tmp[tmp.Count()-1], test.Questions[i].Description));
+                        questionData.Add(new QuestionData(tmp[tmp.Count()-1], test.Questions[i].Description, i+1));
                     }
                     break;
                 }
@@ -482,6 +482,10 @@ namespace TestBot.WRF
 
         private void ButtonAddQuestion_Click(object sender, RoutedEventArgs e)
         {
+            ButtonAddQuestion.IsEnabled = false;
+            RadioButtonInputQuestion.Visibility = Visibility.Visible;
+            RadioButtonOrderQuestion.Visibility = Visibility.Visible;
+            RadioButtonOptionQuestion.Visibility = Visibility.Visible;
             QuestionTextLabel.Visibility = Visibility.Visible;
             TextBoxNewQuestionText.Visibility = Visibility.Visible;
             SaveNewQuestionButton.Visibility = Visibility.Visible;
@@ -489,9 +493,49 @@ namespace TestBot.WRF
 
         private void SaveNewQuestionButton_Click(object sender, RoutedEventArgs e)
         {
+            ButtonAddQuestion.IsEnabled = true;
+
+            RadioButtonInputQuestion.IsChecked = false;
+            RadioButtonOrderQuestion.IsChecked = false;
+            RadioButtonOptionQuestion.IsChecked = false;
+
+            RadioButtonInputQuestion.Visibility = Visibility.Hidden;
+            RadioButtonOrderQuestion.Visibility = Visibility.Hidden;
+            RadioButtonOptionQuestion.Visibility = Visibility.Hidden;
+
             QuestionTextLabel.Visibility = Visibility.Hidden;
+            TextBoxNewQuestionText.Clear();
             TextBoxNewQuestionText.Visibility = Visibility.Hidden;
             SaveNewQuestionButton.Visibility = Visibility.Hidden;
+            //ComboBoxNewQuestionOptions.                                                   Очистить
+            ComboBoxNewQuestionOptions.Visibility = Visibility.Hidden;
+            LabelCorrectAnser.Visibility = Visibility.Hidden;
+            TextBoxCorrectAnswer.Clear();
+            TextBoxCorrectAnswer.Visibility = Visibility.Hidden;
+
+
+        }
+
+        private void RadioButtonOptionQuestion_Checked(object sender, RoutedEventArgs e)
+        {
+            ComboBoxNewQuestionOptions.Visibility = Visibility.Visible;
+        }
+
+        private void RadioButtonOptionQuestion_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ComboBoxNewQuestionOptions.Visibility = Visibility.Hidden;
+        }
+
+        private void RadioButtonInputQuestion_Checked(object sender, RoutedEventArgs e)
+        {
+            TextBoxCorrectAnswer.Visibility = Visibility.Visible;
+            LabelCorrectAnser.Visibility = Visibility.Visible;
+        }
+
+        private void RadioButtonInputQuestion_Unchecked(object sender, RoutedEventArgs e)
+        {
+            TextBoxCorrectAnswer.Visibility = Visibility.Hidden;
+            LabelCorrectAnser.Visibility = Visibility.Hidden;
         }
     }
 }

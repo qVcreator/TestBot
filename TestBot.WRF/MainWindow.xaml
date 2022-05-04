@@ -112,7 +112,7 @@
                     <Button x:Name="ButtonStartBot" Content="СтартБот" HorizontalAlignment="Left" Margin="27,464,0,0" VerticalAlignment="Top" Click="ButtonStartBot_Click"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Вопросы" Height="24" Margin="0,1,-13,-1" HorizontalAlignment="Right" Width="120" >
+            <TabItem Header="Вопросы" Height="24" Margin="0,1,-12,-1" HorizontalAlignment="Right" Width="120" >
                 <Grid Background="#FFC8C8C8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -121,11 +121,17 @@
                     <ComboBox x:Name="ComboBoxTestNameSelect" HorizontalAlignment="Left" Height="22" Margin="84,10,0,0" VerticalAlignment="Top" Width="234" SelectionChanged="ComboBoxTestNameSelect_SelectionChanged"/>
                     <Label Content="Тест:" HorizontalAlignment="Left" Margin="48,8,0,0" VerticalAlignment="Top"/>
                     <DataGrid x:Name="DataGridShowQuestions" HorizontalAlignment="Center" Height="150" Margin="0,39,0,0" VerticalAlignment="Top" Width="330" d:ItemsSource="{d:SampleData ItemCount=3}" GridLinesVisibility="None" SelectionUnit="FullRow" SelectionMode="Single" IsReadOnly="True"/>
-                    <Button x:Name="ButtonDeleteQuestion" Content="Удалить вопрос" HorizontalAlignment="Left" Margin="152,194,0,0" VerticalAlignment="Top" Width="100"/>
+                    <Button x:Name="ButtonDeleteQuestion" Content="Удалить вопрос" HorizontalAlignment="Left" Margin="240,194,0,0" VerticalAlignment="Top" Width="100"/>
                     <Button x:Name="ButtonAddQuestion" Content="Добавить вопрос" HorizontalAlignment="Left" Margin="18,194,0,0" VerticalAlignment="Top" Width="110" Click="ButtonAddQuestion_Click"/>
-                    <TextBox x:Name="TextBoxNewQuestionText" HorizontalAlignment="Left" Margin="84,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="260" Height="21" Visibility="Hidden"/>
-                    <Label x:Name="QuestionTextLabel" Content="Вопрос:" HorizontalAlignment="Left" Margin="29,221,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
-                    <Button x:Name="SaveNewQuestionButton" Content="Сохранить" HorizontalAlignment="Center" Margin="0,258,0,0" VerticalAlignment="Top" Visibility="Hidden" Click="SaveNewQuestionButton_Click"/>
+                    <TextBox x:Name="TextBoxNewQuestionText" HorizontalAlignment="Left" Margin="84,290,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="260" Height="21" Visibility="Hidden"/>
+                    <Label x:Name="QuestionTextLabel" Content="Вопрос:" HorizontalAlignment="Left" Margin="31,286,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+                    <Button x:Name="SaveNewQuestionButton" Content="Сохранить" HorizontalAlignment="Center" Margin="0,435,0,0" VerticalAlignment="Top" Visibility="Hidden" Click="SaveNewQuestionButton_Click"/>
+                    <RadioButton x:Name="RadioButtonInputQuestion" Content="Вопрос с вводом ответа" HorizontalAlignment="Left" Margin="85,225,0,0" VerticalAlignment="Top" Visibility="Hidden" Checked="RadioButtonInputQuestion_Checked" Unchecked="RadioButtonInputQuestion_Unchecked"/>
+                    <RadioButton x:Name="RadioButtonOptionQuestion" Content="Вопрос с выбором вариантов" HorizontalAlignment="Left" Margin="85,246,0,0" VerticalAlignment="Top" Visibility="Hidden" Checked="RadioButtonOptionQuestion_Checked" Unchecked="RadioButtonOptionQuestion_Unchecked"/>
+                    <RadioButton x:Name="RadioButtonOrderQuestion" Content="Вопрос с упорядочиванием ответов" HorizontalAlignment="Left" Margin="85,265,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+                    <DataGrid x:Name="ComboBoxNewQuestionOptions" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="30,317,17,85" Visibility="Hidden"/>
+                    <TextBox x:Name="TextBoxCorrectAnswer" HorizontalAlignment="Left" Margin="85,316,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="255" Visibility="Hidden"/>
+                    <Label x:Name="LabelCorrectAnser" Content="Ответ:" HorizontalAlignment="Left" Margin="40,312,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
 
 
                 </Grid>
