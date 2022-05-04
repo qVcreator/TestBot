@@ -33,7 +33,7 @@ namespace TestBot.WRF
 
         public List<Test> Tests { get; private set; }
 
-        private UserData _selectedUser;
+        private UserData _selectedUser; 
         private DispatcherTimer _timer;
         private const string _token = "5265334359:AAGJciyVQB0wg6YHbnIMmHSNBFMOQxZlrBs";
         private TelegramManager _telegramManager;
@@ -60,21 +60,21 @@ namespace TestBot.WRF
             Tests.Add(TestMock.GetMock(TestEnums.TestTelega));
 
 
-            using (StreamReader reader = new StreamReader(@"D:\groups.json"))
-            {
-                string groupsJson = reader.ReadToEnd();
-                List<GroupModel> groupModels = JsonSerializer.Deserialize<List<GroupModel>>(groupsJson)!;
-                List<long> ids = new List<long>();
-                foreach(var groupModel in groupModels)
-                {
-                    Groups.Add(new Group(groupModel.Name, groupModel.Users));
-                    for (int i = 0; i < groupModel.Users.Count; i++)
-                    {
-                        ids.Add(groupModel.Users[i].ChatId);
-                    }
-                }
-                _telegramManager.UpdateIds(ids);
-            }
+            //using (StreamReader reader = new StreamReader(@"C:\groups.json"))
+            //{
+            //    string groupsJson = reader.ReadToEnd();
+            //    List<GroupModel> groupModels = JsonSerializer.Deserialize<List<GroupModel>>(groupsJson)!;
+            //    List<long> ids = new List<long>();
+            //    foreach (var groupModel in groupModels)
+            //    {
+            //        Groups.Add(new Group(groupModel.Name, groupModel.Users));
+            //        for (int i = 0; i < groupModel.Users.Count; i++)
+            //        {
+            //            ids.Add(groupModel.Users[i].ChatId);
+            //        }
+            //    }
+            //    _telegramManager.UpdateIds(ids);
+            //}
 
             var data = LoadUserData();
             LoadTests();
@@ -326,6 +326,35 @@ namespace TestBot.WRF
                 Tests.Add(new Test(testName, SendGroup, finishDate));
             }
         }
+
+        private List<QuestionData> LoadQuestionData()
+        {
+            List<QuestionData> questionData = new List<QuestionData>();
+
+            foreach (var test in Tests)
+            {
+                if (ComboBoxTestNameSelect.SelectedValue.ToString() != null && test.Name == ComboBoxTestNameSelect.SelectedValue.ToString())
+                {
+                    for (int i = 0; i < test.Questions.Count; i++)
+                    {
+                        string[] tmp = test.Questions[i].GetType().ToString().Split(".");
+
+                        questionData.Add(new QuestionData(tmp[tmp.Count()-1], test.Questions[i].Description));
+                    }
+                    break;
+                }
+                else if (ComboBoxTestNameSelect.SelectedValue.ToString() != null)
+                {
+
+                }
+
+
+            }
+
+            return questionData;
+
+        }
+
         private List<UserData> LoadUserData()
         {
             List<UserData> data = new List<UserData>();
@@ -401,6 +430,7 @@ namespace TestBot.WRF
             foreach (var test in Tests)
             {
                 ComboBoxTestsToSend.Items.Add(test.Name);
+                ComboBoxTestNameSelect.Items.Add(test.Name);
             }
         }
 
@@ -444,5 +474,24 @@ namespace TestBot.WRF
             _telegramManager.StartBot();
         }
 
+        private void ComboBoxTestNameSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var questionData = LoadQuestionData();
+            DataGridShowQuestions.ItemsSource = questionData; 
+        }
+
+        private void ButtonAddQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            QuestionTextLabel.Visibility = Visibility.Visible;
+            TextBoxNewQuestionText.Visibility = Visibility.Visible;
+            SaveNewQuestionButton.Visibility = Visibility.Visible;
+        }
+
+        private void SaveNewQuestionButton_Click(object sender, RoutedEventArgs e)
+        {
+            QuestionTextLabel.Visibility = Visibility.Hidden;
+            TextBoxNewQuestionText.Visibility = Visibility.Hidden;
+            SaveNewQuestionButton.Visibility = Visibility.Hidden;
+        }
     }
 }

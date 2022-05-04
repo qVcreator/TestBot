@@ -57,7 +57,7 @@
                     <TextBox x:Name="TextBoxSelectedUserGroup" HorizontalAlignment="Left" Margin="18,331,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164" Height="21" IsEnabled="False"/>
                     <TextBox x:Name="TextBoxSelectedUserName" HorizontalAlignment="Left" Margin="18,357,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164" Height="22" IsEnabled="False"/>
                     <TextBox x:Name="TextBoxNewUserName" HorizontalAlignment="Left" Margin="186,357,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="161" Height="22" ToolTip="Новое имя пользователя"/>
-                    <Label Content="Упраление пользоателями" HorizontalAlignment="Center" Margin="0,301,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                    <Label Content="Упраление пользователями" HorizontalAlignment="Center" Margin="0,301,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
                     <Label Content="Новое название:" HorizontalAlignment="Left" Margin="10,516,0,0" VerticalAlignment="Top" Height="28" Width="103"/>
                     <Label Content="Группа:" HorizontalAlignment="Left" Margin="62,490,0,0" VerticalAlignment="Top" Width="52"/>
                     <ComboBox x:Name="ComboBoxOldGroupName" HorizontalAlignment="Left" Margin="118,492,0,0" VerticalAlignment="Top" Width="229"/>
@@ -70,7 +70,7 @@
                     </Popup>
                 </Grid>
             </TabItem>
-            <TabItem Header="Управление тестами" Height="24" Margin="0,1,-36,-1" HorizontalAlignment="Right" Width="136" >
+            <TabItem Header="Тесты" Height="24" Margin="0,1,-13,-1" HorizontalAlignment="Right" Width="136" >
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FFF0F0F0"/>
@@ -84,7 +84,7 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="Создание" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="25" Width="160" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                     <Label Content="Название:" HorizontalAlignment="Right" Margin="0,71,267,0" VerticalAlignment="Top" Height="26" Width="65"/>
-                    <Label Content="Группа(ы):" HorizontalAlignment="Right" Margin="0,374,272,0" VerticalAlignment="Top" Height="26" Width="66"/>
+                    <Label Content="Группы:" HorizontalAlignment="Right" Margin="0,374,267,0" VerticalAlignment="Top" Height="26" Width="60"/>
                     <Label Content="Длительность:" HorizontalAlignment="Right" Margin="0,115,272,0" VerticalAlignment="Top" Height="26" Width="88"/>
                     <CheckBox x:Name="CheckBoxDeadLine" Content="ДедЛайн" HorizontalAlignment="Left" Margin="24,51,0,0" VerticalAlignment="Top" Height="15" Width="69" Click="CheckBoxDeadLine_Click"/>
                     <TextBox x:Name="TextBoxTestName" HorizontalAlignment="Right" Margin="0,73,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="252" Height="22
@@ -101,7 +101,7 @@
                     <Label Content="Длительность:" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" Height="26" Width="88"/>
                     <ComboBox x:Name="ComboBoxTestNameEdit" HorizontalAlignment="Left" Height="22" Margin="102,197,0,0" VerticalAlignment="Top" Width="253"/>
                     <TextBox x:Name="TextBoxTestDurationEdit" HorizontalAlignment="Left" Margin="103,238,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="253" Height="22"/>
-                    <Label Content="Вопрсоы:" HorizontalAlignment="Left" Margin="37,267,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Вопросы:" HorizontalAlignment="Left" Margin="37,267,0,0" VerticalAlignment="Top"/>
                     <ComboBox HorizontalAlignment="Left" Margin="104,269,0,0" VerticalAlignment="Top" Width="230" Height="22"/>
                     <Button Content="-" HorizontalAlignment="Left" Margin="334,269,0,0" VerticalAlignment="Top" Width="21" Height="22"/>
                     <Label Content="Управление" HorizontalAlignment="Center" Margin="0,325,0,0" VerticalAlignment="Top" Height="25" Width="228" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
@@ -110,6 +110,24 @@
                     <Button x:Name="ButtonCreateTest" Content="Создать" HorizontalAlignment="Left" Margin="303,157,0,0" VerticalAlignment="Top" Width="52" Click="ButtonCreateTest_Click"/>
                     <ComboBox x:Name="ComboBoxTestsToSend" HorizontalAlignment="Left" Margin="10,410,0,0" VerticalAlignment="Top" Width="340"/>
                     <Button x:Name="ButtonStartBot" Content="СтартБот" HorizontalAlignment="Left" Margin="27,464,0,0" VerticalAlignment="Top" Click="ButtonStartBot_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Вопросы" Height="24" Margin="0,1,-13,-1" HorizontalAlignment="Right" Width="120" >
+                <Grid Background="#FFC8C8C8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="ComboBoxTestNameSelect" HorizontalAlignment="Left" Height="22" Margin="84,10,0,0" VerticalAlignment="Top" Width="234" SelectionChanged="ComboBoxTestNameSelect_SelectionChanged"/>
+                    <Label Content="Тест:" HorizontalAlignment="Left" Margin="48,8,0,0" VerticalAlignment="Top"/>
+                    <DataGrid x:Name="DataGridShowQuestions" HorizontalAlignment="Center" Height="150" Margin="0,39,0,0" VerticalAlignment="Top" Width="330" d:ItemsSource="{d:SampleData ItemCount=3}" GridLinesVisibility="None" SelectionUnit="FullRow" SelectionMode="Single" IsReadOnly="True"/>
+                    <Button x:Name="ButtonDeleteQuestion" Content="Удалить вопрос" HorizontalAlignment="Left" Margin="152,194,0,0" VerticalAlignment="Top" Width="100"/>
+                    <Button x:Name="ButtonAddQuestion" Content="Добавить вопрос" HorizontalAlignment="Left" Margin="18,194,0,0" VerticalAlignment="Top" Width="110" Click="ButtonAddQuestion_Click"/>
+                    <TextBox x:Name="TextBoxNewQuestionText" HorizontalAlignment="Left" Margin="84,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="260" Height="21" Visibility="Hidden"/>
+                    <Label x:Name="QuestionTextLabel" Content="Вопрос:" HorizontalAlignment="Left" Margin="29,221,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+                    <Button x:Name="SaveNewQuestionButton" Content="Сохранить" HorizontalAlignment="Center" Margin="0,258,0,0" VerticalAlignment="Top" Visibility="Hidden" Click="SaveNewQuestionButton_Click"/>
+
+
                 </Grid>
             </TabItem>
         </TabControl>
