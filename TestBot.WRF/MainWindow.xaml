@@ -91,7 +91,7 @@
                     <ComboBox x:Name="ComboBoxChooseGroup" HorizontalAlignment="Left" Margin="106,375,0,0" VerticalAlignment="Top" Width="249" Height="22"/>
                     <Button x:Name="ButtonAddGroupToSend" Content="+" Margin="355,375,0,0" HorizontalAlignment="Left" Width="22" Height="22" VerticalAlignment="Top" Click="ButtonAddGroupToSend_Click"/>
                     <TextBox x:Name="TextBoxDuration" HorizontalAlignment="Left" Margin="103,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="273" Height="22" Visibility="Visible"/>
-                    <DatePicker x:Name="DatePickerDuration" HorizontalAlignment="Left" Margin="103,133,0,0" VerticalAlignment="Top" Width="140" Visibility="Hidden"/>
+                    <DatePicker x:Name="DatePickerDuration" HorizontalAlignment="Left" Margin="103,119,0,0" VerticalAlignment="Top" Width="274" Visibility="Hidden"/>
                     <Label Content="Текст вопроса:" HorizontalAlignment="Right" Margin="0,227,500,0" VerticalAlignment="Top" Width="95"/>
                     <Button x:Name="QuestionSaveButton" Content="Добавить вопрос" HorizontalAlignment="Left" Margin="158,405,0,289"/>
                     <Label Content="" HorizontalAlignment="Left" Margin="125,185,0,0" VerticalAlignment="Top"/>
@@ -101,7 +101,7 @@
                     <ComboBox x:Name="ComboBoxTestNameEdit" HorizontalAlignment="Left" Height="22" Margin="103,197,0,0" VerticalAlignment="Top" Width="273"/>
                     <TextBox x:Name="TextBoxTestDurationEdit" HorizontalAlignment="Left" Margin="103,238,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="273" Height="22"/>
                     <Label Content="Вопрсоы:" HorizontalAlignment="Left" Margin="37,267,0,0" VerticalAlignment="Top"/>
-                    <ComboBox HorizontalAlignment="Left" Margin="104,269,0,0" VerticalAlignment="Top" Width="251" Height="22"/>
+                    <ComboBox x:Name="ComboBoxDeleteQuestion" HorizontalAlignment="Left" Margin="104,269,0,0" VerticalAlignment="Top" Width="251" Height="22"/>
                     <Button Content="-" HorizontalAlignment="Left" Margin="355,269,0,0" VerticalAlignment="Top" Width="21" Height="22"/>
                     <Label Content="Управление" HorizontalAlignment="Center" Margin="0,325,0,0" VerticalAlignment="Top" Height="25" Width="228" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                     <Button x:Name="ButtonStartTest" Content="Запустить!" HorizontalAlignment="Left" Margin="38,437,0,0" VerticalAlignment="Top" Height="22" Width="162" Click="ButtonStartTest_Click"/>
@@ -110,6 +110,7 @@
                     <ComboBox x:Name="ComboBoxTestsToSend" HorizontalAlignment="Left" Margin="38,410,0,0" VerticalAlignment="Top" Width="338"/>
                     <Button x:Name="ButtonStartBot" Content="СтартБот" HorizontalAlignment="Left" Margin="27,464,0,0" VerticalAlignment="Top" Click="ButtonStartBot_Click"/>
                     <Label Content="Тест:" HorizontalAlignment="Left" Margin="62,195,0,0" VerticalAlignment="Top"/>
+                    <DatePicker x:Name="DatePickerChangeDuration" HorizontalAlignment="Left" Margin="106,236,0,0" VerticalAlignment="Top" Width="274" Visibility="Hidden"/>
                 </Grid>
             </TabItem>
         </TabControl>
