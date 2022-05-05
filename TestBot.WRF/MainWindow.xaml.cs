@@ -224,6 +224,7 @@ namespace TestBot.WRF
                 ComboBoxNewUserGroup.Items.Add(name);
                 ComboBoxDeleteGroup.Items.Add(name);
                 ComboBoxOldGroupName.Items.Add(name);
+                ComboBoxChooseGroup.Items.Add(name);
             }
             else
             {
@@ -315,6 +316,7 @@ namespace TestBot.WRF
         private void ButtonCreateTest_Click(object sender, RoutedEventArgs e)
         {
             var testName = TextBoxTestName.Text;
+            ComboBoxTestNameEdit.Items.Add(testName);
             if (TextBoxDuration.IsVisible)
             {
                 double testDuration = Convert.ToDouble(TextBoxDuration.Text);
@@ -401,6 +403,7 @@ namespace TestBot.WRF
             foreach (var test in Tests)
             {
                 ComboBoxTestsToSend.Items.Add(test.Name);
+                ComboBoxTestNameEdit.Items.Add(test.Name);
             }
         }
 
@@ -443,6 +446,5 @@ namespace TestBot.WRF
         {
             _telegramManager.StartBot();
         }
-
     }
 }
