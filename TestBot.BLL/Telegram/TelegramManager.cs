@@ -100,7 +100,9 @@ namespace TestBot.BLL.Telegram
         public async void ProccessingOrderQuestion(Update update, ITelegramBotClient botClient)
         {
             var currentQuestion = TestingGroup[update.CallbackQuery!.Message!.Chat.Id].Questions[TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber];
-            if (update.CallbackQuery != null && currentQuestion is OrderQuestion)
+            if (update.CallbackQuery != null &&
+                TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber < TestingGroup[update.CallbackQuery.Message.Chat.Id].Questions.Count &&
+                currentQuestion is OrderQuestion)
             {
                 if (update.CallbackQuery.Data != null && update.CallbackQuery.Data != "Подтвердить" && currentQuestion._test.CheckInput(update.CallbackQuery.Data))
                 {
