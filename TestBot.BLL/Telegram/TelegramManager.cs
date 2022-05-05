@@ -31,45 +31,15 @@ namespace TestBot.BLL.Telegram
                 var botUpdates = update.Message;
                 if (botUpdates != null && botUpdates.Text == "/start" && !(_usersId.Contains(botUpdates.Chat.Id)))
                 {
-                    _usersId.Add(botUpdates.Chat.Id);
-                    User newUser = new User(botUpdates.Chat.FirstName!, botUpdates.Chat.Id);
-                    _onMessage(newUser);
+                    ProccessingStartMessage(botUpdates);
                 }
                 else if (botUpdates != null && botUpdates.Text != "/start" && TestingGroup != null)
                 {
-                    if (botUpdates.Text != null && TestingGroup[botUpdates.Chat.Id].Questions[TestingGroup[botUpdates.Chat.Id].QuestionNumber] is InputQuestion)
-                    {
-                        var currentQuestion = TestingGroup[botUpdates.Chat.Id].Questions[TestingGroup[botUpdates.Chat.Id].QuestionNumber];
-
-                        if (currentQuestion._test.CheckInput(botUpdates.Text))
-                        {
-                            TestingGroup[botUpdates.Chat.Id].QuestionNumberIncrement();
-                            currentQuestion = TestingGroup[botUpdates.Chat.Id].Questions[TestingGroup[botUpdates.Chat.Id].QuestionNumber];
-                        }
-
-                        await botClient.SendTextMessageAsync(botUpdates.Chat.Id, currentQuestion.Description,
-                            replyMarkup: currentQuestion._keyboardMaker.GetKeyboard(currentQuestion.Options));
-                    }
+                    ProccessingInputQuestion(botUpdates, botClient);
                 }
-                else if (update.CallbackQuery != null && TestingGroup != null)
+                else if (update.CallbackQuery != null && update.CallbackQuery.Message != null && TestingGroup != null)
                 {
-                    if (update.CallbackQuery != null && TestingGroup[update.CallbackQuery.Message.Chat.Id].Questions[TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber] is OrderQuestion)
-                    {
-                        var currentQuestion = TestingGroup[update.CallbackQuery.Message.Chat.Id].Questions[TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber];
-
-                        if (update.CallbackQuery != null && update.CallbackQuery.Data != "Подтвердить" && currentQuestion._test.CheckInput(update.CallbackQuery.Data))
-                        {
-                            currentQuestion.UserAnswers.Add(update.CallbackQuery.Data);
-                        }
-                        else if (update.CallbackQuery != null && update.CallbackQuery.Data == "Подтвердить")
-                        {
-                            TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumberIncrement();
-                            currentQuestion = TestingGroup[update.CallbackQuery.Message.Chat.Id].Questions[TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber];
-
-                            await botClient.SendTextMessageAsync(update.CallbackQuery.Message.Chat.Id, currentQuestion.Description,
-                                replyMarkup: currentQuestion._keyboardMaker.GetKeyboard(currentQuestion.Options));
-                        }
-                    }
+                    ProccessingOrderQuestion(update, botClient);
                 }
             }
         }
@@ -109,6 +79,51 @@ namespace TestBot.BLL.Telegram
         public void UpdateIds(List<long> usersId)
         {
             _usersId = usersId;
+        }
+
+        public async void ProccessingInputQuestion(Message botUpdates, ITelegramBotClient botClient)
+        {
+            var currentQuestion = TestingGroup[botUpdates.Chat.Id].Questions[TestingGroup[botUpdates.Chat.Id].QuestionNumber];
+            if (botUpdates.Text != null && currentQuestion is InputQuestion)
+            {
+                if (currentQuestion._test.CheckInput(botUpdates.Text))
+                {
+                    TestingGroup[botUpdates.Chat.Id].QuestionNumberIncrement();
+                    currentQuestion = TestingGroup[botUpdates.Chat.Id].Questions[TestingGroup[botUpdates.Chat.Id].QuestionNumber];
+                }
+
+                await botClient.SendTextMessageAsync(botUpdates.Chat.Id, currentQuestion.Description,
+                    replyMarkup: currentQuestion._keyboardMaker.GetKeyboard(currentQuestion.Options));
+            }
+        }
+
+        public async void ProccessingOrderQuestion(Update update, ITelegramBotClient botClient)
+        {
+            var currentQuestion = TestingGroup[update.CallbackQuery!.Message!.Chat.Id].Questions[TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber];
+            if (update.CallbackQuery != null &&
+                TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber < TestingGroup[update.CallbackQuery.Message.Chat.Id].Questions.Count &&
+                currentQuestion is OrderQuestion)
+            {
+                if (update.CallbackQuery.Data != null && update.CallbackQuery.Data != "Подтвердить" && currentQuestion._test.CheckInput(update.CallbackQuery.Data))
+                {
+                    currentQuestion.UserAnswers.Add(update.CallbackQuery.Data);
+                }
+                else if (update.CallbackQuery != null && update.CallbackQuery.Data == "Подтвердить")
+                {
+                    TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumberIncrement();
+                    currentQuestion = TestingGroup[update.CallbackQuery.Message.Chat.Id].Questions[TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber];
+
+                    await botClient.SendTextMessageAsync(update.CallbackQuery.Message.Chat.Id, currentQuestion.Description,
+                        replyMarkup: currentQuestion._keyboardMaker.GetKeyboard(currentQuestion.Options));
+                }
+            }
+        }
+
+        public void ProccessingStartMessage(Message botUpdates)
+        {
+            _usersId.Add(botUpdates.Chat.Id);
+            User newUser = new User(botUpdates.Chat.FirstName!, botUpdates.Chat.Id);
+            _onMessage(newUser);
         }
     }
 }
