@@ -63,6 +63,10 @@ namespace TestBot.WRF
             using (StreamReader reader = new StreamReader(@"D:\groups.json"))
             {
                 string groupsJson = reader.ReadToEnd();
+                if(groupsJson != "" || groupsJson != null)
+                {
+                    Groups.Clear();
+                }
                 List<GroupModel> groupModels = JsonSerializer.Deserialize<List<GroupModel>>(groupsJson)!;
                 List<long> ids = new List<long>();
                 foreach(var groupModel in groupModels)
@@ -276,19 +280,26 @@ namespace TestBot.WRF
         private void ButtonStartTest_Click(object sender, RoutedEventArgs e)
         {
             TestController testController = TestController.GetTestController();
-            var chosenTest = ComboBoxTestsToSend.SelectedValue.ToString()!;
-            foreach (var test in Tests)
+            if (ComboBoxTestsToSend.SelectedValue != null && SendGroup.Count != 0)
             {
-                if (test.Name == chosenTest)
+                var chosenTest = ComboBoxTestsToSend.SelectedValue.ToString()!;
+                foreach (var test in Tests)
                 {
-                    testController.SetTest(test);
-                    testController.SetType(test.IsTest);
-                    break;
+                    if (test.Name == chosenTest)
+                    {
+                        testController.SetTest(test);
+                        testController.SetType(test.IsTest);
+                        break;
+                    }
                 }
-            }
-            testController.SetGroup(SendGroup);
+                testController.SetGroup(SendGroup);
 
-            _telegramManager.Start();
+                _telegramManager.Start();
+            }
+            else
+            {
+                popupMisingStartTestArgs.IsOpen = true;
+            }
         }
 
         private void ButtonStopTest_Click(object sender, RoutedEventArgs e)
@@ -298,9 +309,21 @@ namespace TestBot.WRF
 
         private void ButtonAddGroupToSend_Click(object sender, RoutedEventArgs e)
         {
+            bool isContain = false;
+            foreach(var group in SendGroup)
+            {
+                if (ComboBoxChooseGroup.SelectedValue != null && group.Name == ComboBoxChooseGroup.SelectedValue.ToString())
+                {
+                    isContain = true;
+                }
+            }
             if (ComboBoxChooseGroup.SelectedValue is null)
             {
-
+                popupMisingTestGroup.IsOpen = true;
+            }
+            else if (isContain)
+            {
+                popupContainsTestGroup.IsOpen = true;
             }
             else
             {
@@ -317,32 +340,39 @@ namespace TestBot.WRF
         private void ButtonCreateTest_Click(object sender, RoutedEventArgs e)
         {
             var testName = TextBoxTestName.Text;
-            ComboBoxTestNameEdit.Items.Add(testName);
-            if (TextBoxDuration.IsVisible)
+            if (TextBoxTestName.Text != "" && (TextBoxDuration.Text != "" || DatePickerDuration.SelectedDate != null))
             {
-                if (RadioButtonPoll.IsChecked is true)
+                ComboBoxTestNameEdit.Items.Add(testName);
+                if (TextBoxDuration.IsVisible)
                 {
-                    double testDuration = Convert.ToDouble(TextBoxDuration.Text);
-                    Tests.Add(new Test(testName, SendGroup, testDuration, false));
+                    if (RadioButtonPoll.IsChecked is true)
+                    {
+                        double testDuration = Convert.ToDouble(TextBoxDuration.Text);
+                        Tests.Add(new Test(testName, SendGroup, testDuration, false));
+                    }
+                    else
+                    {
+                        double testDuration = Convert.ToDouble(TextBoxDuration.Text);
+                        Tests.Add(new Test(testName, SendGroup, testDuration, true));
+                    }
                 }
                 else
                 {
-                    double testDuration = Convert.ToDouble(TextBoxDuration.Text);
-                    Tests.Add(new Test(testName, SendGroup, testDuration, true));
+                    if (RadioButtonPoll.IsChecked is true)
+                    {
+                        DateTime finishDate = (DateTime)(DatePickerDuration.SelectedDate);
+                        Tests.Add(new Test(testName, SendGroup, finishDate, false));
+                    }
+                    else
+                    {
+                        DateTime finishDate = (DateTime)(DatePickerDuration.SelectedDate);
+                        Tests.Add(new Test(testName, SendGroup, finishDate, true));
+                    }
                 }
             }
             else
             {
-                if (RadioButtonPoll.IsChecked is true)
-                {
-                    DateTime finishDate = (DateTime)(DatePickerDuration.SelectedDate);
-                    Tests.Add(new Test(testName, SendGroup, finishDate, false));
-                }
-                else
-                {
-                    DateTime finishDate = (DateTime)(DatePickerDuration.SelectedDate);
-                    Tests.Add(new Test(testName, SendGroup, finishDate, true));
-                }
+                popupMisingTestArgs.IsOpen = true;
             }
         }
         private List<UserData> LoadUserData()
@@ -454,9 +484,17 @@ namespace TestBot.WRF
         private void MainWindow1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             string json = JsonSerializer.Serialize(Groups);
-            using (StreamWriter writer = new StreamWriter(@"D:\groups.json", true))
+            using (StreamWriter writer = new StreamWriter(@"D:\groups.json", false))
             {
                 writer.WriteAsync(json);
+            }
+        }
+
+        private void ButtonClearGroups_Click(object sender, RoutedEventArgs e)
+        {
+            if(SendGroup != null)
+            {
+                SendGroup.Clear();
             }
         }
     }

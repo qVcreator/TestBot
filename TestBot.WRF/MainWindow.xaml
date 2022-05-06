@@ -88,8 +88,18 @@
                     <CheckBox x:Name="CheckBoxDeadLine" Content="ДедЛайн" HorizontalAlignment="Left" Margin="24,51,0,0" VerticalAlignment="Top" Height="15" Width="69" Click="CheckBoxDeadLine_Click"/>
                     <TextBox x:Name="TextBoxTestName" HorizontalAlignment="Left" Margin="103,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="273" Height="22
                              " ToolTip=""/>
-                    <ComboBox x:Name="ComboBoxChooseGroup" HorizontalAlignment="Left" Margin="106,375,0,0" VerticalAlignment="Top" Width="249" Height="22"/>
-                    <Button x:Name="ButtonAddGroupToSend" Content="+" Margin="355,375,0,0" HorizontalAlignment="Left" Width="22" Height="22" VerticalAlignment="Top" Click="ButtonAddGroupToSend_Click"/>
+                    <ComboBox x:Name="ComboBoxChooseGroup" HorizontalAlignment="Left" Margin="106,375,0,0" VerticalAlignment="Top" Width="193" Height="22"/>
+                    <Button x:Name="ButtonAddGroupToSend" Content="+" Margin="299,375,0,0" HorizontalAlignment="Left" Width="22" Height="22" VerticalAlignment="Top" Click="ButtonAddGroupToSend_Click"/>
+                    <Popup x:Name="popupMisingTestGroup" StaysOpen="False" Placement="Mouse" MaxWidth="180" AllowsTransparency="True"  >
+                        <TextBlock TextWrapping="Wrap" Width="180" Background="LightPink" Opacity="0.8" >
+                            Заполните поля
+                        </TextBlock>
+                    </Popup>
+                    <Popup x:Name="popupContainsTestGroup" StaysOpen="False" Placement="Mouse" MaxWidth="180" AllowsTransparency="True"  >
+                        <TextBlock TextWrapping="Wrap" Width="180" Background="LightPink" Opacity="0.8" >
+                            Группа уже добавлена
+                        </TextBlock>
+                    </Popup>
                     <TextBox x:Name="TextBoxDuration" HorizontalAlignment="Left" Margin="103,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="273" Height="22" Visibility="Visible"/>
                     <DatePicker x:Name="DatePickerDuration" HorizontalAlignment="Left" Margin="103,119,0,0" VerticalAlignment="Top" Width="274" Visibility="Hidden"/>
                     <Label Content="Текст вопроса:" HorizontalAlignment="Right" Margin="0,227,500,0" VerticalAlignment="Top" Width="95"/>
@@ -105,13 +115,24 @@
                     <Button Content="-" HorizontalAlignment="Left" Margin="355,269,0,0" VerticalAlignment="Top" Width="21" Height="22"/>
                     <Label Content="Управление" HorizontalAlignment="Center" Margin="0,325,0,0" VerticalAlignment="Top" Height="25" Width="228" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                     <Button x:Name="ButtonStartTest" Content="Запустить!" HorizontalAlignment="Left" Margin="38,437,0,0" VerticalAlignment="Top" Height="22" Width="162" Click="ButtonStartTest_Click"/>
+                    <Popup x:Name="popupMisingStartTestArgs" StaysOpen="False" Placement="Mouse" MaxWidth="180" AllowsTransparency="True"  >
+                        <TextBlock TextWrapping="Wrap" Width="180" Background="LightPink" Opacity="0.8" >
+                            Заполните поля
+                        </TextBlock>
+                    </Popup>
                     <Button x:Name="ButtonStopTest" Content="Остановить!" HorizontalAlignment="Left" Margin="215,437,0,0" VerticalAlignment="Top" Height="22" Width="162" Click="ButtonStopTest_Click"/>
                     <Button x:Name="ButtonCreateTest" Content="Создать" HorizontalAlignment="Left" Margin="305,146,0,0" VerticalAlignment="Top" Width="71" Click="ButtonCreateTest_Click"/>
+                    <Popup x:Name="popupMisingTestArgs" StaysOpen="False" Placement="Mouse" MaxWidth="180" AllowsTransparency="True"  >
+                        <TextBlock TextWrapping="Wrap" Width="180" Background="LightPink" Opacity="0.8" >
+                            Заполните поля
+                        </TextBlock>
+                    </Popup>
                     <ComboBox x:Name="ComboBoxTestsToSend" HorizontalAlignment="Left" Margin="38,410,0,0" VerticalAlignment="Top" Width="338"/>
                     <Label Content="Тест:" HorizontalAlignment="Left" Margin="62,195,0,0" VerticalAlignment="Top"/>
                     <DatePicker x:Name="DatePickerChangeDuration" HorizontalAlignment="Left" Margin="106,236,0,0" VerticalAlignment="Top" Width="274" Visibility="Hidden"/>
                     <RadioButton x:Name="RadioButtonTest" Content="Тест" HorizontalAlignment="Left" Margin="106,51,0,0" VerticalAlignment="Top" Width="52"/>
                     <RadioButton x:Name="RadioButtonPoll" Content="Опрос" HorizontalAlignment="Left" Margin="173,51,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="ButtonClearGroups" Content="Очистить" HorizontalAlignment="Left" Margin="321,375,0,0" VerticalAlignment="Top" Height="22" Click="ButtonClearGroups_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>
