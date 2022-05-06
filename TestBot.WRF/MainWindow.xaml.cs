@@ -395,6 +395,7 @@ namespace TestBot.WRF
             }
 
             ComboBoxTestNameSelect.Items.Add(TextBoxTestName.Text);
+            ComboBoxTestsToSend.Items.Add(TextBoxTestName.Text);
         }
 
         private List<QuestionModel> LoadQuestionData()

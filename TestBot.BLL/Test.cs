@@ -48,6 +48,7 @@ namespace TestBot.BLL
             StartTime = DateTime.Now;
             FinishTime = StartTime.AddHours(TestDuration);
             Questions = new List<AbstractQuestion>();
+            IsTest = type;
         }
 
         public Test(string name, List<Group> groups, DateTime finishTime, bool type)
@@ -57,6 +58,7 @@ namespace TestBot.BLL
             StartTime = DateTime.Now;
             FinishTime = finishTime;
             Questions = new List<AbstractQuestion>();
+            IsTest = type;
         }
 
         public void ChangeName(string newName)

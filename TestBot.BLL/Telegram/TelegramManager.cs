@@ -57,7 +57,7 @@ namespace TestBot.BLL.Telegram
                     TestingGroup[update.CallbackQuery.Message.Chat.Id].IsTest == true &&
                     TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber < TestingGroup[update.CallbackQuery.Message.Chat.Id].Questions.Count)
                 {
-                    ProccessingTestOrderQuestion(update, botClient);
+                    await ProccessingTestOrderQuestion(update, botClient);
                 }
                 else if (update.CallbackQuery != null && update.CallbackQuery.Message != null && TestingGroup != null &&
                    TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber >= TestingGroup[update.CallbackQuery.Message.Chat.Id].Questions.Count)
@@ -95,11 +95,12 @@ namespace TestBot.BLL.Telegram
             SaveReport(TestingGroup, testController);
         }
 
-        public void SendFirstMessage()
+        public async void SendFirstMessage()
         {
             foreach(var key in TestingGroup.Keys)
             {
-                _client.SendTextMessageAsync(key, TestingGroup[key].Questions[0].Description) ;
+                await _client.SendTextMessageAsync(key, TestingGroup[key].Questions[0].Description,
+                    replyMarkup: TestingGroup[key].Questions[0]._keyboardMaker.GetKeyboard(TestingGroup[key].Questions[0].Options)) ;
             }
         }
 
@@ -185,7 +186,7 @@ namespace TestBot.BLL.Telegram
             }
         }
 
-        public async void ProccessingTestOrderQuestion(Update update, ITelegramBotClient botClient)
+        public async Task ProccessingTestOrderQuestion(Update update, ITelegramBotClient botClient)
         {
             var currentQuestion = TestingGroup[update.CallbackQuery!.Message!.Chat.Id].Questions[TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber];
             if (update.CallbackQuery != null &&
@@ -198,7 +199,6 @@ namespace TestBot.BLL.Telegram
                 }
                 else if (update.CallbackQuery != null && update.CallbackQuery.Data == "Подтвердить")
                 {
-                    TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumberIncrement();
 
                     if (currentQuestion._test.CheckAnswer(currentQuestion.UserAnswers, currentQuestion.CorrectAnswers))
                     {
@@ -208,6 +208,8 @@ namespace TestBot.BLL.Telegram
                     {
                         await botClient.SendTextMessageAsync(update.CallbackQuery.Message.Chat.Id, "❌");
                     }
+
+                    TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumberIncrement();
 
                     if (TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber < TestingGroup[update.CallbackQuery.Message.Chat.Id].Questions.Count)
                     {
