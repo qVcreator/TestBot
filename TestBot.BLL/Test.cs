@@ -46,6 +46,7 @@ namespace TestBot.BLL
             TestDuration = testDuration;
             StartTime = DateTime.Now;
             FinishTime = StartTime.AddHours(TestDuration);
+            Questions = new List<AbstractQuestion>();
         }
 
         public Test(string name, List<Group> groups, DateTime finishTime)
@@ -54,6 +55,7 @@ namespace TestBot.BLL
             Groups = groups;
             StartTime = DateTime.Now;
             FinishTime = finishTime;
+            Questions = new List<AbstractQuestion>();
         }
 
         public void ChangeName(string newName)
@@ -86,6 +88,22 @@ namespace TestBot.BLL
             for (int i = 0; i < Questions.Count; i++)
             {
                 if (Questions[i].Description == question.Description)
+                {
+                    Questions.RemoveAt(i);
+                }
+            }
+        }
+
+        public void DeleteQuestion(string description)
+        {
+            if (description is null)
+            {
+                throw new ArgumentException("question");
+            }
+
+            for (int i = 0; i < Questions.Count; i++)
+            {
+                if (Questions[i].Description == description)
                 {
                     Questions.RemoveAt(i);
                 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestBot.BLL
 {
-    public class QuestionData
+    public class QuestionModel
     {
         public int Number { get; set; }
 
@@ -14,7 +14,7 @@ namespace TestBot.BLL
 
         public string Description { get; set; }
 
-        public QuestionData(string type, string description, int number)
+        public QuestionModel(string type, string description, int number)
         {
             Type = type;
 

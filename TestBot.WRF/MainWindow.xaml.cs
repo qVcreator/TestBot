@@ -19,6 +19,10 @@ using TestBot.BLL.Telegram;
 using System.Text.Json;
 using System.IO;
 using TestBot.BLL.GroupModels;
+using TestBot.BLL.Questions;
+using TestBot.BLL.Interfaces;
+using TestBot.BLL.Interfaces.Implementations;
+using TestBot.BLL.Models;
 
 namespace TestBot.WRF
 {
@@ -325,11 +329,13 @@ namespace TestBot.WRF
                 DateTime finishDate = (DateTime)(DatePickerDuration.SelectedDate);
                 Tests.Add(new Test(testName, SendGroup, finishDate));
             }
+
+            ComboBoxTestNameSelect.Items.Add(TextBoxTestName.Text);
         }
 
-        private List<QuestionData> LoadQuestionData()
+        private List<QuestionModel> LoadQuestionData()
         {
-            List<QuestionData> questionData = new List<QuestionData>();
+            List<QuestionModel> questionData = new List<QuestionModel>();
 
             foreach (var test in Tests)
             {
@@ -339,11 +345,11 @@ namespace TestBot.WRF
                     {
                         string[] tmp = test.Questions[i].GetType().ToString().Split(".");
 
-                        questionData.Add(new QuestionData(tmp[tmp.Count()-1], test.Questions[i].Description, i+1));
+                        questionData.Add(new QuestionModel(tmp[tmp.Count()-1], test.Questions[i].Description, i+1));
                     }
                     break;
                 }
-                else if (ComboBoxTestNameSelect.SelectedValue.ToString() != null)
+                else
                 {
 
                 }
@@ -483,59 +489,341 @@ namespace TestBot.WRF
         private void ButtonAddQuestion_Click(object sender, RoutedEventArgs e)
         {
             ButtonAddQuestion.IsEnabled = false;
+
+
             RadioButtonInputQuestion.Visibility = Visibility.Visible;
             RadioButtonOrderQuestion.Visibility = Visibility.Visible;
             RadioButtonOptionQuestion.Visibility = Visibility.Visible;
             QuestionTextLabel.Visibility = Visibility.Visible;
             TextBoxNewQuestionText.Visibility = Visibility.Visible;
-            SaveNewQuestionButton.Visibility = Visibility.Visible;
+
+
         }
 
         private void SaveNewQuestionButton_Click(object sender, RoutedEventArgs e)
         {
-            ButtonAddQuestion.IsEnabled = true;
+            if (RadioButtonInputQuestion.IsChecked == true && (TextBoxNewQuestionText.Text.Trim() == "" || TextBoxCorrectAnswer.Text.Trim() == ""))
+            {
+                popupInvalidProperties.IsOpen = true;
+            }
+            else if (RadioButtonOptionQuestion.IsChecked == true && ComboBoxNewQuestionOptions.Items.Count == 0)
+            {
+                popupInvalidProperties.IsOpen = true;
+            }
+            else if (RadioButtonOrderQuestion.IsChecked == true && ComboBoxNewQuestionOptions.Items.Count == 0)
+            {
+                popupInvalidProperties.IsOpen = true;
+            }
+            else if (!string.IsNullOrEmpty(TextBoxNewQuestionText.Text) && TextBoxNewQuestionText.Text != " ")
+            {
+                CreateQuestion();
+            
 
-            RadioButtonInputQuestion.IsChecked = false;
-            RadioButtonOrderQuestion.IsChecked = false;
-            RadioButtonOptionQuestion.IsChecked = false;
+                UpdateDataGridShowQuestions();
 
-            RadioButtonInputQuestion.Visibility = Visibility.Hidden;
-            RadioButtonOrderQuestion.Visibility = Visibility.Hidden;
-            RadioButtonOptionQuestion.Visibility = Visibility.Hidden;
+                ButtonAddQuestion.IsEnabled = true;
 
-            QuestionTextLabel.Visibility = Visibility.Hidden;
-            TextBoxNewQuestionText.Clear();
-            TextBoxNewQuestionText.Visibility = Visibility.Hidden;
-            SaveNewQuestionButton.Visibility = Visibility.Hidden;
-            //ComboBoxNewQuestionOptions.                                                   Очистить
-            ComboBoxNewQuestionOptions.Visibility = Visibility.Hidden;
-            LabelCorrectAnser.Visibility = Visibility.Hidden;
-            TextBoxCorrectAnswer.Clear();
-            TextBoxCorrectAnswer.Visibility = Visibility.Hidden;
+                RadioButtonInputQuestion.IsChecked = false;
+                RadioButtonOrderQuestion.IsChecked = false;
+                RadioButtonOptionQuestion.IsChecked = false;
+
+                RadioButtonInputQuestion.Visibility = Visibility.Hidden;
+                RadioButtonOrderQuestion.Visibility = Visibility.Hidden;
+                RadioButtonOptionQuestion.Visibility = Visibility.Hidden;
+
+                QuestionTextLabel.Visibility = Visibility.Hidden;
+                TextBoxNewQuestionText.Clear();
+                TextBoxNewQuestionText.Visibility = Visibility.Hidden;
+                ButtonSaveNewQuestion.Visibility = Visibility.Hidden;
+                ComboBoxNewQuestionOptions.ItemsSource = new List<OptionTestModel>();
+                ComboBoxNewQuestionOptions.Visibility = Visibility.Hidden;
+                LabelCorrectAnser.Visibility = Visibility.Hidden;
+                TextBoxCorrectAnswer.Clear();
+                TextBoxCorrectAnswer.Visibility = Visibility.Hidden;
+                CheckBoxCorrectAnswer.IsChecked = false;
 
 
+                ButtonSaveNewQuestion.Margin = new Thickness(0, 339, 0, 0);
+                TextBoxCorrectAnswer.Margin = new Thickness(77, 316, 0, 0);
+            }
+            else
+            {
+                popupInvalidProperties.IsOpen = true;
+            }
         }
 
-        private void RadioButtonOptionQuestion_Checked(object sender, RoutedEventArgs e)
-        {
-            ComboBoxNewQuestionOptions.Visibility = Visibility.Visible;
-        }
-
-        private void RadioButtonOptionQuestion_Unchecked(object sender, RoutedEventArgs e)
-        {
-            ComboBoxNewQuestionOptions.Visibility = Visibility.Hidden;
-        }
-
-        private void RadioButtonInputQuestion_Checked(object sender, RoutedEventArgs e)
+        private void RadioButtonInputQuestion_Checked(object sender, RoutedEventArgs e)             //Input
         {
             TextBoxCorrectAnswer.Visibility = Visibility.Visible;
+            ButtonSaveNewQuestion.Visibility = Visibility.Visible;
             LabelCorrectAnser.Visibility = Visibility.Visible;
+
+            ButtonSaveNewQuestion.Margin = new Thickness(0, 339, 0, 0);
+            TextBoxCorrectAnswer.Margin = new Thickness(77, 316, 0, 0);
+
+
         }
 
         private void RadioButtonInputQuestion_Unchecked(object sender, RoutedEventArgs e)
         {
             TextBoxCorrectAnswer.Visibility = Visibility.Hidden;
             LabelCorrectAnser.Visibility = Visibility.Hidden;
+
+            ButtonSaveNewQuestion.Margin = new Thickness(0, 438, 0, 0);
+
+        }
+
+        private void RadioButtonOptionQuestion_Checked(object sender, RoutedEventArgs e)            //Option
+        {
+            ComboBoxNewQuestionOptions.Visibility = Visibility.Visible;
+            TextBoxCorrectAnswer.Visibility = Visibility.Visible;
+            LabelCorrectAnser.Visibility = Visibility.Visible;
+            ButtonSaveNewQuestion.Visibility = Visibility.Visible;
+            ButtonAddOption.Visibility = Visibility.Visible;
+            CheckBoxCorrectAnswer.Visibility = Visibility.Visible;
+
+
+            LabelCorrectAnser.Margin = new Thickness(13, 312, 0, 0);
+            ButtonSaveNewQuestion.Margin = new Thickness(0, 414, 0, 0);
+            TextBoxCorrectAnswer.Margin = new Thickness(57, 316, 0, 0);
+        }
+
+        private void RadioButtonOptionQuestion_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ComboBoxNewQuestionOptions.Visibility = Visibility.Hidden;
+            TextBoxCorrectAnswer.Visibility = Visibility.Visible;
+            LabelCorrectAnser.Visibility = Visibility.Hidden;
+            ButtonAddOption.Visibility = Visibility.Hidden;
+            CheckBoxCorrectAnswer.Visibility = Visibility.Hidden;
+            CheckBoxCorrectAnswer.IsChecked = false;
+
+
+
+
+            LabelCorrectAnser.Margin = new Thickness(33, 312, 0, 0);
+            TextBoxCorrectAnswer.Margin = new Thickness(77, 316, 0, 0);
+        }
+
+        private void RadioButtonOrderQuestion_Checked(object sender, RoutedEventArgs e)             //Order
+        {
+            ComboBoxNewQuestionOptions.Visibility = Visibility.Visible;
+            ButtonSaveNewQuestion.Visibility = Visibility.Visible;
+            TextBoxCorrectAnswer.Visibility = Visibility.Visible;
+            LabelCorrectAnser.Visibility= Visibility.Visible;
+            ButtonAddOption.Visibility = Visibility.Visible;
+
+            ButtonSaveNewQuestion.Margin = new Thickness(0, 414, 0, 0);
+            LabelCorrectAnser.Margin = new Thickness(13, 312, 0, 0);
+            TextBoxCorrectAnswer.Margin = new Thickness(57, 316, 0, 0);
+        }
+
+        private void RadioButtonOrderQuestion_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ButtonSaveNewQuestion.Margin = new Thickness(0, 438, 0, 0);
+
+            ComboBoxNewQuestionOptions.Visibility = Visibility.Hidden;
+            ButtonAddOption.Visibility = Visibility.Hidden;
+
+        }
+
+        private void ButtonAddOption_Click(object sender, RoutedEventArgs e)
+        {
+            if (ComboBoxNewQuestionOptions.Items.Count == 3 )
+            {
+                ButtonAddOption.IsEnabled = false;
+            }
+
+
+            if (!string.IsNullOrEmpty(TextBoxCorrectAnswer.Text))
+            {
+                var optionsData = LoadOptionsData();
+                ComboBoxNewQuestionOptions.ItemsSource = optionsData;
+
+                TextBoxCorrectAnswer.Clear();
+                CheckBoxCorrectAnswer.IsChecked = false;
+
+            }
+
+        }
+
+        private List<OptionTestModel> LoadOptionsData()
+        {
+            var optionsData = OptionsOutput.GetOptionsOutput();
+
+
+                if (!string.IsNullOrEmpty(TextBoxNewQuestionText.Text) && TextBoxNewQuestionText.Text.Trim() != "")
+                {
+                    int id = optionsData.Options.Count() + 1;
+                    string name = TextBoxCorrectAnswer.Text;
+                    string answer;
+
+                    if (CheckBoxCorrectAnswer.IsChecked == true)
+                    {
+                        answer = "Верный";
+                    }
+                    else
+                    {
+                        answer = "Неверный";
+                    }
+
+                    if (name != "")
+                    {
+                        optionsData.AddOptions(new OptionTestModel(id, name, answer));
+                    }
+                }
+
+            ComboBoxNewQuestionOptions.Items.Refresh();
+
+            return optionsData.Options;
+        }
+
+        private Test GetTestByName(string testName)
+        {
+            Test test = null;
+
+            foreach (var item in Tests)
+            {
+                if (item.Name == testName)
+                {
+                    test = item;
+                }
+
+            }
+            return test;
+        }
+
+        private void CreateQuestion()
+        {
+            string questionDescription = TextBoxNewQuestionText.Text;
+            string answer = TextBoxCorrectAnswer.Text;
+            string testName = ComboBoxTestNameSelect.Text;
+            List<string> correctAnswers = new List<string>();
+            List<string> options = new List<string>();
+
+            ITester tester;
+            IKeyboardMaker keyboardMaker;
+            AbstractQuestion currentQuestion;
+
+            if (string.IsNullOrEmpty(questionDescription))
+            {
+                popupInvalidProperties.IsOpen = false;
+            }
+            else
+            {
+                if (RadioButtonInputQuestion.IsChecked == true)
+                {
+                    tester = new InputTester();
+                    keyboardMaker = new InputKeyboardMaker();
+
+                    correctAnswers.Add(answer);
+
+                    currentQuestion = new InputQuestion(questionDescription, correctAnswers, tester, keyboardMaker);
+
+                    GetTestByName(testName).Questions.Add(currentQuestion);
+                }
+                else if (RadioButtonOptionQuestion.IsChecked == true)
+                {
+                    tester = new OptionTester();
+
+                    List<OptionTestModel> optionsData = LoadOptionsData();
+
+                    foreach (var item in optionsData)
+                    {
+                        options.Add(item.Name);
+
+                        if (item.Answer == "Верный")
+                        {
+                            correctAnswers.Add(item.Name);
+                        }
+                    }
+
+                    optionsData.Clear();
+                    currentQuestion = new OptionQuestion(questionDescription, options, correctAnswers, tester);
+
+                    GetTestByName(testName).Questions.Add(currentQuestion);
+                    ComboBoxNewQuestionOptions.Items.Refresh();
+
+                }
+                else if (RadioButtonOrderQuestion.IsChecked == true)
+                {
+                    tester = new OrderTester();
+                    keyboardMaker = new OrderKeyboardMaker();
+
+                    List<OptionTestModel> optionsData = LoadOptionsData();
+
+                    foreach (var item in optionsData)
+                    {
+                        options.Add(item.Name);
+                        correctAnswers.Add(item.Name);
+                    }
+                    optionsData.Clear();
+                    currentQuestion = new OrderQuestion(questionDescription, options, correctAnswers, tester, keyboardMaker);
+
+                    GetTestByName(testName).Questions.Add(currentQuestion);
+                    ComboBoxNewQuestionOptions.Items.Refresh();
+
+                }
+
+            }
+
+        }
+
+        private void TextBoxCorrectAnswer_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (TextBoxNewQuestionText.Text.Trim() != "" && TextBoxCorrectAnswer.Text.Trim() != "")
+            {
+                ButtonAddOption.IsEnabled = true;
+            }
+            else
+            {
+                ButtonAddOption.IsEnabled = false;
+
+            }
+        }
+
+        private void UpdateDataGridShowQuestions()
+        {
+            var questionData = LoadQuestionData();
+            DataGridShowQuestions.ItemsSource = questionData;
+        }
+
+        private void TextBoxNewQuestionText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (TextBoxNewQuestionText.Text.Trim() != "" && TextBoxCorrectAnswer.Text.Trim() != "")
+            {
+                ButtonAddOption.IsEnabled = true;
+            }
+            else
+            {
+                ButtonAddOption.IsEnabled = false;
+            }
+        }
+
+        private void ButtonDeleteQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            string testName = ComboBoxTestNameSelect.Text;
+            dynamic row = DataGridShowQuestions.SelectedItem;
+            string name = row.Description;
+
+            foreach (var test in Tests)
+            {
+                if (test.Name == testName)
+                {
+                    test.DeleteQuestion(name);
+                }
+            }
+
+            ButtonDeleteQuestion.IsEnabled = false;
+            DataGridShowQuestions.ItemsSource = LoadQuestionData();
+
+        }
+
+        private void DataGridShowQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DataGridShowQuestions.SelectedValue != null)
+            {
+                ButtonDeleteQuestion.IsEnabled = true;
+            }
         }
     }
 }
