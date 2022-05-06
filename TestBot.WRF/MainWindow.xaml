@@ -69,7 +69,7 @@
                     </Popup>
                 </Grid>
             </TabItem>
-            <TabItem Header="Управление тестами" Height="24" Margin="0,1,-36,-1" HorizontalAlignment="Right" Width="136" >
+            <TabItem Header="Тесты" Height="24" Margin="0,1,-13,-1" HorizontalAlignment="Right" Width="136" >
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FFF0F0F0"/>
@@ -133,6 +133,37 @@
                     <RadioButton x:Name="RadioButtonTest" Content="Тест" HorizontalAlignment="Left" Margin="106,51,0,0" VerticalAlignment="Top" Width="52"/>
                     <RadioButton x:Name="RadioButtonPoll" Content="Опрос" HorizontalAlignment="Left" Margin="173,51,0,0" VerticalAlignment="Top"/>
                     <Button x:Name="ButtonClearGroups" Content="Очистить" HorizontalAlignment="Left" Margin="321,375,0,0" VerticalAlignment="Top" Height="22" Click="ButtonClearGroups_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Вопросы" Height="24" Margin="0,1,-12,-1" HorizontalAlignment="Right" Width="120" >
+                <Grid Background="#FFC8C8C8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="ComboBoxTestNameSelect" HorizontalAlignment="Left" Height="22" Margin="84,10,0,0" VerticalAlignment="Top" Width="234" SelectionChanged="ComboBoxTestNameSelect_SelectionChanged"/>
+                    <Label Content="Тест:" HorizontalAlignment="Left" Margin="48,8,0,0" VerticalAlignment="Top"/>
+                    <DataGrid x:Name="DataGridShowQuestions" HorizontalAlignment="Center" Height="150" Margin="0,39,0,0" VerticalAlignment="Top" Width="330" d:ItemsSource="{d:SampleData ItemCount=3}" GridLinesVisibility="None" SelectionUnit="FullRow" SelectionMode="Single" IsReadOnly="True" SelectionChanged="DataGridShowQuestions_SelectionChanged"/>
+                    <Button x:Name="ButtonDeleteQuestion" Content="Удалить вопрос" HorizontalAlignment="Left" Margin="240,194,0,0" VerticalAlignment="Top" Width="100" Click="ButtonDeleteQuestion_Click" IsEnabled="False"/>
+                    <Button x:Name="ButtonAddQuestion" Content="Добавить вопрос" HorizontalAlignment="Left" Margin="18,194,0,0" VerticalAlignment="Top" Width="110" Click="ButtonAddQuestion_Click"/>
+                    <TextBox x:Name="TextBoxNewQuestionText" HorizontalAlignment="Left" Margin="77,290,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="256" Height="20" Visibility="Hidden" TextChanged="TextBoxNewQuestionText_TextChanged"/>
+                    <Label x:Name="QuestionTextLabel" Content="Вопрос:" HorizontalAlignment="Left" Margin="24,286,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+                    <Button x:Name="ButtonSaveNewQuestion" Content="Сохранить" HorizontalAlignment="Center" Margin="0, 339, 0, 0" VerticalAlignment="Top" Visibility="Hidden" Click="SaveNewQuestionButton_Click"/>
+                    <Popup x:Name="popupInvalidProperties" StaysOpen="False" Placement="Mouse" MaxWidth="180" AllowsTransparency="True"  >
+                        <TextBlock TextWrapping="Wrap" Width="180" Background="LightPink" Opacity="0.8" >
+                            Поля заполнены неправильно
+                        </TextBlock>
+                    </Popup>
+                    <RadioButton x:Name="RadioButtonInputQuestion" Content="Вопрос с вводом ответа" HorizontalAlignment="Left" Margin="85,225,0,0" VerticalAlignment="Top" Visibility="Hidden" Checked="RadioButtonInputQuestion_Checked" Unchecked="RadioButtonInputQuestion_Unchecked"/>
+                    <RadioButton x:Name="RadioButtonOptionQuestion" Content="Вопрос с выбором вариантов" HorizontalAlignment="Left" Margin="85,246,0,0" VerticalAlignment="Top" Visibility="Hidden" Checked="RadioButtonOptionQuestion_Checked" Unchecked="RadioButtonOptionQuestion_Unchecked"/>
+                    <RadioButton x:Name="RadioButtonOrderQuestion" Content="Вопрос с упорядочиванием ответов" HorizontalAlignment="Left" Margin="85,265,0,0" VerticalAlignment="Top" Visibility="Hidden" Checked="RadioButtonOrderQuestion_Checked" Unchecked="RadioButtonOrderQuestion_Unchecked"/>
+                    <DataGrid x:Name="ComboBoxNewQuestionOptions" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="37,341,10,61" Visibility="Hidden"/>
+                    <TextBox x:Name="TextBoxCorrectAnswer" HorizontalAlignment="Left" Margin="77,316,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="256" Visibility="Hidden" Height="19" TextChanged="TextBoxCorrectAnswer_TextChanged"/>
+                    <Label x:Name="LabelCorrectAnser" Content="Ответ:" HorizontalAlignment="Left" Margin="33,312,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+                    <Button x:Name="ButtonAddOption" Content="+" HorizontalAlignment="Left" Margin="318,316,0,0" VerticalAlignment="Top" Click="ButtonAddOption_Click" Visibility="Hidden" Width="19" Height="19" FontStretch="Medium" FontSize="10" FontWeight="ExtraBlack" IsEnabled="False"/>
+                    <CheckBox x:Name="CheckBoxCorrectAnswer" HorizontalAlignment="Left" Margin="335,318,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+
+
                 </Grid>
             </TabItem>
         </TabControl>
