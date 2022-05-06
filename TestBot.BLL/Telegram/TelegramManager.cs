@@ -57,7 +57,7 @@ namespace TestBot.BLL.Telegram
                     TestingGroup[update.CallbackQuery.Message.Chat.Id].IsTest == true &&
                     TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber < TestingGroup[update.CallbackQuery.Message.Chat.Id].Questions.Count)
                 {
-                    await ProccessingTestOrderQuestion(update, botClient);
+                    ProccessingTestOrderQuestion(update, botClient);
                 }
                 else if (update.CallbackQuery != null && update.CallbackQuery.Message != null && TestingGroup != null &&
                    TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber >= TestingGroup[update.CallbackQuery.Message.Chat.Id].Questions.Count)
@@ -186,21 +186,22 @@ namespace TestBot.BLL.Telegram
             }
         }
 
-        public async Task ProccessingTestOrderQuestion(Update update, ITelegramBotClient botClient)
+        public async void ProccessingTestOrderQuestion(Update update, ITelegramBotClient botClient)
         {
             var currentQuestion = TestingGroup[update.CallbackQuery!.Message!.Chat.Id].Questions[TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber];
+            var currentUserTestData = TestingGroup[update.CallbackQuery!.Message!.Chat.Id];
             if (update.CallbackQuery != null &&
                 TestingGroup[update.CallbackQuery.Message.Chat.Id].QuestionNumber < TestingGroup[update.CallbackQuery.Message.Chat.Id].Questions.Count &&
                 (currentQuestion is OrderQuestion || currentQuestion is OptionQuestion))
             {
                 if (update.CallbackQuery.Data != null && update.CallbackQuery.Data != "Подтвердить" && currentQuestion._test.CheckInput(update.CallbackQuery.Data))
-                {
-                    currentQuestion.UserAnswers.Add(update.CallbackQuery.Data);
+                { 
+                    currentUserTestData.UserAnswers[currentQuestion].Add(update.CallbackQuery.Data);
                 }
                 else if (update.CallbackQuery != null && update.CallbackQuery.Data == "Подтвердить")
                 {
 
-                    if (currentQuestion._test.CheckAnswer(currentQuestion.UserAnswers, currentQuestion.CorrectAnswers))
+                    if (currentQuestion._test.CheckAnswer(currentUserTestData.UserAnswers[currentQuestion], currentQuestion.CorrectAnswers))
                     {
                         await botClient.SendTextMessageAsync(update.CallbackQuery.Message.Chat.Id, "✅");
                     }

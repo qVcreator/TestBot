@@ -13,6 +13,8 @@ namespace TestBot.BLL
 
         public int QuestionNumber { get; private set; }
 
+        public Dictionary<AbstractQuestion, List<string>> UserAnswers { get; private set; }
+
         public bool IsTest { get; private set; }
 
         public string Name { get; private set; }
@@ -26,6 +28,13 @@ namespace TestBot.BLL
             QuestionNumber = 0;
 
             Name = name;
+
+            UserAnswers = new Dictionary<AbstractQuestion, List<string>>();
+
+            foreach (var question in questions)
+            {
+                UserAnswers.Add(question,new List<string>());
+            }
         }
 
         public void QuestionNumberIncrement()
