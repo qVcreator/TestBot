@@ -65,7 +65,8 @@ namespace TestBot.Tests
         [Test]
         public void DeleteQuestionTest_WhenQuesstionIsNull_ShouldThrowArgumentNullException()
         {
-            Assert.Throws<ArgumentException>(() => TestMock.GetMock(TestEnums.Test1).DeleteQuestion(null));
+            Assert.Throws<ArgumentException>(() => TestMock.GetMock(TestEnums.Test1).DeleteQuestion((string)null));
+            Assert.Throws<ArgumentException>(() => TestMock.GetMock(TestEnums.Test1).DeleteQuestion((AbstractQuestion)null));
         }
 
         [TestCase(GroupEnums.group3, TestEnums.Test1, TestEnums.TestGroupAdded1)]

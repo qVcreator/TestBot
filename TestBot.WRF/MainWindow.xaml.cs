@@ -794,6 +794,8 @@ namespace TestBot.WRF
                 {
                     tester = new OptionTester();
 
+                    keyboardMaker = new OrderKeyboardMaker();
+
                     List<OptionTestModel> optionsData = LoadOptionsData();
 
                     foreach (var item in optionsData)
@@ -807,7 +809,7 @@ namespace TestBot.WRF
                     }
 
                     optionsData.Clear();
-                    currentQuestion = new OptionQuestion(questionDescription, options, correctAnswers, tester);
+                    currentQuestion = new OptionQuestion(questionDescription, options, correctAnswers, tester, keyboardMaker);
 
                     GetTestByName(testName).Questions.Add(currentQuestion);
                     ComboBoxNewQuestionOptions.Items.Refresh();
