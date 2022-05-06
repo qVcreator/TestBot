@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +16,23 @@ namespace TestBot.BLL.Interfaces.Implementations
             }
 
             return false;
+        }
+
+        public bool CheckAnswer(List<string> inputs, List<string> correctAnswers)
+        {
+            if(inputs.Count != correctAnswers.Count)
+            {
+                return false;
+            }
+            for(int i = 0; i < inputs.Count; i++)
+            {
+                if(inputs[i] != correctAnswers[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public bool CheckInput(string input)

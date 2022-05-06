@@ -66,6 +66,7 @@ namespace TestBot.BLL.Mocks
         TestGroupAdded1,
         TestGroupAdded2,
         TestGroupAdded3,
-        TestTelega
+        TestTelega,
+        RealTest
     }
 }

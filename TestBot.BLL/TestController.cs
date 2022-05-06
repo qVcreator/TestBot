@@ -12,6 +12,8 @@ namespace TestBot.BLL
 
         public List<Group> TestingGroups { get; private set; }
 
+        public bool IsTest { get; private set; }
+
         private static TestController _testController ;
 
         private TestController()
@@ -38,6 +40,11 @@ namespace TestBot.BLL
             _testController.UsersTest = test;
         }
 
+        public void SetType(bool type)
+        {
+            IsTest = type;
+        }
+
         public Dictionary<long , UserTestData> GetDictionary()
         {
             Dictionary<long, UserTestData> newDictionary = new Dictionary<long, UserTestData>();
@@ -46,7 +53,7 @@ namespace TestBot.BLL
                 for (int j = 0; j < _testController.TestingGroups[i].Users.Count; j++)
                 {
                     long chatId = _testController.TestingGroups[i].Users[j].ChatId;
-                    newDictionary.Add(chatId, new UserTestData(_testController.UsersTest.Questions));
+                    newDictionary.Add(chatId, new UserTestData(_testController.UsersTest.Questions, IsTest));
                 }
             }
             return newDictionary;

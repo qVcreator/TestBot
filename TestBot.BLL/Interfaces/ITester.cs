@@ -5,6 +5,6 @@ namespace TestBot.BLL.Interfaces
     {
         public bool CheckInput(string input);
 
-        public bool CheckAnswer(string input, List<string> correctAnswers);
+        public bool CheckAnswer(List<string> input, List<string> correctAnswers);
     }
 }

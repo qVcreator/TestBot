@@ -8,9 +8,9 @@ namespace TestBot.BLL.Interfaces.Implementations
 {
     public class InputTester : ITester
     {
-        public bool CheckAnswer(string input, List<string> correctAnswers)
+        public bool CheckAnswer(List<string> input, List<string> correctAnswers)
         {
-            if (correctAnswers.Contains(input.ToLower().Trim()))
+            if (correctAnswers.Contains(input[0].ToLower().Trim()))
             {
                 return true;
             }
