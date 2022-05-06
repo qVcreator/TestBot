@@ -282,6 +282,7 @@ namespace TestBot.WRF
                 if (test.Name == chosenTest)
                 {
                     testController.SetTest(test);
+                    testController.SetType(test.IsTest);
                     break;
                 }
             }
@@ -319,13 +320,29 @@ namespace TestBot.WRF
             ComboBoxTestNameEdit.Items.Add(testName);
             if (TextBoxDuration.IsVisible)
             {
-                double testDuration = Convert.ToDouble(TextBoxDuration.Text);
-                Tests.Add(new Test(testName, SendGroup, testDuration));
+                if (RadioButtonPoll.IsChecked is true)
+                {
+                    double testDuration = Convert.ToDouble(TextBoxDuration.Text);
+                    Tests.Add(new Test(testName, SendGroup, testDuration, false));
+                }
+                else
+                {
+                    double testDuration = Convert.ToDouble(TextBoxDuration.Text);
+                    Tests.Add(new Test(testName, SendGroup, testDuration, true));
+                }
             }
             else
             {
-                DateTime finishDate = (DateTime)(DatePickerDuration.SelectedDate);
-                Tests.Add(new Test(testName, SendGroup, finishDate));
+                if (RadioButtonPoll.IsChecked is true)
+                {
+                    DateTime finishDate = (DateTime)(DatePickerDuration.SelectedDate);
+                    Tests.Add(new Test(testName, SendGroup, finishDate, false));
+                }
+                else
+                {
+                    DateTime finishDate = (DateTime)(DatePickerDuration.SelectedDate);
+                    Tests.Add(new Test(testName, SendGroup, finishDate, true));
+                }
             }
         }
         private List<UserData> LoadUserData()
@@ -439,12 +456,8 @@ namespace TestBot.WRF
             string json = JsonSerializer.Serialize(Groups);
             using (StreamWriter writer = new StreamWriter(@"D:\groups.json", true))
             {
-                writer.WriteLineAsync(json);
+                writer.WriteAsync(json);
             }
-        }
-        private void ButtonStartBot_Click(object sender, RoutedEventArgs e)
-        {
-            _telegramManager.StartBot();
         }
     }
 }

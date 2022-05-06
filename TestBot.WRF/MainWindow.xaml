@@ -108,9 +108,10 @@
                     <Button x:Name="ButtonStopTest" Content="Остановить!" HorizontalAlignment="Left" Margin="215,437,0,0" VerticalAlignment="Top" Height="22" Width="162" Click="ButtonStopTest_Click"/>
                     <Button x:Name="ButtonCreateTest" Content="Создать" HorizontalAlignment="Left" Margin="305,146,0,0" VerticalAlignment="Top" Width="71" Click="ButtonCreateTest_Click"/>
                     <ComboBox x:Name="ComboBoxTestsToSend" HorizontalAlignment="Left" Margin="38,410,0,0" VerticalAlignment="Top" Width="338"/>
-                    <Button x:Name="ButtonStartBot" Content="СтартБот" HorizontalAlignment="Left" Margin="27,464,0,0" VerticalAlignment="Top" Click="ButtonStartBot_Click"/>
                     <Label Content="Тест:" HorizontalAlignment="Left" Margin="62,195,0,0" VerticalAlignment="Top"/>
                     <DatePicker x:Name="DatePickerChangeDuration" HorizontalAlignment="Left" Margin="106,236,0,0" VerticalAlignment="Top" Width="274" Visibility="Hidden"/>
+                    <RadioButton x:Name="RadioButtonTest" Content="Тест" HorizontalAlignment="Left" Margin="106,51,0,0" VerticalAlignment="Top" Width="52"/>
+                    <RadioButton x:Name="RadioButtonPoll" Content="Опрос" HorizontalAlignment="Left" Margin="173,51,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
         </TabControl>

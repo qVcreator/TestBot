@@ -13,9 +13,13 @@ namespace TestBot.BLL
 
         public int QuestionNumber { get; private set; }
 
-        public UserTestData(List<AbstractQuestion> questions)
+        public bool IsTest { get; private set; }
+
+        public UserTestData(List<AbstractQuestion> questions, bool type)
         {
             Questions = questions;
+
+            IsTest = type;
 
             QuestionNumber = 0;
         }

@@ -1,4 +1,4 @@
-﻿
+
 namespace TestBot.BLL.Interfaces.Implementations
 {
     public class OptionTester : ITester
@@ -29,6 +29,26 @@ namespace TestBot.BLL.Interfaces.Implementations
             return false;
         }
 
+        public bool CheckAnswer(List<string> inputs, List<string> correctAnswers)
+        {
+            if (inputs.Count != correctAnswers.Count)
+            {
+                return false;
+            }
+            List<bool> isCorrect = new List<bool>();
+            for (int i = 0; i < inputs.Count; i++)
+            {
+                if (inputs[i] == correctAnswers[i])
+                {
+                    isCorrect.Add(true);
+                }
+            }
+            if(isCorrect.Count != correctAnswers.Count)
+            {
+                return false;
+            }
+            return true;
+        }
 
         public bool CheckInput(string input)
         {
