@@ -53,7 +53,8 @@ namespace TestBot.BLL
                 for (int j = 0; j < _testController.TestingGroups[i].Users.Count; j++)
                 {
                     long chatId = _testController.TestingGroups[i].Users[j].ChatId;
-                    newDictionary.Add(chatId, new UserTestData(_testController.UsersTest.Questions, IsTest));
+                    string name = _testController.TestingGroups[i].Users[j].Name;
+                    newDictionary.Add(chatId, new UserTestData(_testController.UsersTest.Questions, IsTest, name));
                 }
             }
             return newDictionary;

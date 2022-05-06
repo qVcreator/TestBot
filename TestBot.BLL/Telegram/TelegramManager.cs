@@ -1,10 +1,12 @@
-﻿using Telegram.Bot;
+﻿using System.Text.Json;
+using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 using TestBot.BLL.Questions;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace TestBot.BLL.Telegram
 {
@@ -89,6 +91,8 @@ namespace TestBot.BLL.Telegram
         public void Stop()
         {
             _isReceive = false;
+            TestController testController = TestController.GetTestController();
+            SaveReport(TestingGroup, testController);
         }
 
         public void SendFirstMessage()
@@ -221,6 +225,15 @@ namespace TestBot.BLL.Telegram
             _usersId.Add(botUpdates.Chat.Id);
             User newUser = new User(botUpdates.Chat.FirstName!, botUpdates.Chat.Id);
             _onMessage(newUser);
+        }
+
+        public void SaveReport(Dictionary<long, UserTestData> testingGroup, TestController testController)
+        {
+            string json = JsonSerializer.Serialize(testingGroup);
+            using (StreamWriter writer = new StreamWriter($@"D:\{testController.UsersTest.Name}.json", false))
+            {
+                writer.WriteAsync(json);
+            }
         }
     }
 }

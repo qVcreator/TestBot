@@ -15,13 +15,17 @@ namespace TestBot.BLL
 
         public bool IsTest { get; private set; }
 
-        public UserTestData(List<AbstractQuestion> questions, bool type)
+        public string Name { get; private set; }
+
+        public UserTestData(List<AbstractQuestion> questions, bool type, string name)
         {
             Questions = questions;
 
             IsTest = type;
 
             QuestionNumber = 0;
+
+            Name = name;
         }
 
         public void QuestionNumberIncrement()
